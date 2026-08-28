@@ -1590,8 +1590,9 @@ Fechar
 </div>
 
 <script>
-// ==================== GERENCIAMENTO MULTI-USUÁRIO & BACKEND API ====================
+// ==================== GERENCIAMENTO MULTI-USUÁRIO & BACKEND API / LOCAL STORAGE ====================
 const SESSAO_STORAGE_KEY = 'portal_veiga_sessao_servidor';
+const LOCAL_USUARIOS_KEY = 'portal_veiga_usuarios_local';
 let timerIntervalVisitante = null;
 let menusAtuaisMemoria = null;
 
@@ -1603,6 +1604,20 @@ function obterSessao() {
 
 function salvarSessao(dados) {
     localStorage.setItem(SESSAO_STORAGE_KEY, JSON.stringify(dados));
+}
+
+function obterUsuariosLocais() {
+    let u = localStorage.getItem(LOCAL_USUARIOS_KEY);
+    if (!u) {
+        const padrao = [{ usuario: 'veiga', senha: '123456', perfil: 'admin', status: 'ativo', expiracao: null, criadoEm: new Date().toISOString() }];
+        localStorage.setItem(LOCAL_USUARIOS_KEY, JSON.stringify(padrao));
+        return padrao;
+    }
+    return JSON.parse(u);
+}
+
+function salvarUsuariosLocais(lista) {
+    localStorage.setItem(LOCAL_USUARIOS_KEY, JSON.stringify(lista));
 }
 
 function alternarAbaAuth(aba) {
@@ -1635,7 +1650,7 @@ function exibirMsgAuth(texto, tipo = 'erro') {
     msg.style.display = 'block';
 }
 
-// 1. LOGIN
+// 1. LOGIN (API ou Fallback Local)
 async function realizarLogin(e) {
     e.preventDefault();
     const usuario = document.getElementById('loginUsuario').value.trim().toLowerCase();
@@ -1647,23 +1662,31 @@ async function realizarLogin(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario, senha })
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            exibirMsgAuth(dados.mensagem || 'Usuário ou senha incorretos.', 'erro');
+        if (res.ok) {
+            const dados = await res.json();
+            if (!dados.sucesso) {
+                exibirMsgAuth(dados.mensagem || 'Usuário ou senha incorretos.', 'erro');
+                return;
+            }
+            salvarSessao({ usuario: dados.usuario, perfil: dados.perfil, expiracao: dados.expiracao });
+            verificarSessao();
             return;
         }
+    } catch (err) {}
 
-        salvarSessao({
-            usuario: dados.usuario,
-            perfil: dados.perfil,
-            expiracao: dados.expiracao
-        });
-
-        verificarSessao();
-    } catch (err) {
-        exibirMsgAuth('Erro ao conectar ao servidor.', 'erro');
+    // Fallback Local
+    const usuarios = obterUsuariosLocais();
+    const conta = usuarios.find(u => u.usuario.toLowerCase() === usuario);
+    if (!conta || conta.senha !== senha) {
+        exibirMsgAuth('⚠️ Usuário ou senha incorretos!', 'erro');
+        return;
     }
+    if (conta.status === 'bloqueado') {
+        exibirMsgAuth('🚫 Esta conta está bloqueada pelo Administrador.', 'erro');
+        return;
+    }
+    salvarSessao({ usuario: conta.usuario, perfil: conta.perfil, expiracao: conta.expiracao });
+    verificarSessao();
 }
 
 // 2. CADASTRO DE CONTA
@@ -1694,22 +1717,36 @@ async function realizarCadastro(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario, senha })
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            exibirMsgAuth(dados.mensagem || 'Erro ao criar conta.', 'erro');
+        if (res.ok) {
+            const dados = await res.json();
+            if (!dados.sucesso) {
+                exibirMsgAuth(dados.mensagem || 'Erro ao criar conta.', 'erro');
+                return;
+            }
+            exibirMsgAuth('✅ Conta criada com sucesso! Você já pode entrar.', 'sucesso');
+            setTimeout(() => {
+                alternarAbaAuth('login');
+                document.getElementById('loginUsuario').value = usuario;
+                document.getElementById('loginSenha').value = senha;
+            }, 1200);
             return;
         }
+    } catch (err) {}
 
-        exibirMsgAuth('✅ Conta criada com sucesso no servidor! Você já pode entrar.', 'sucesso');
-        setTimeout(() => {
-            alternarAbaAuth('login');
-            document.getElementById('loginUsuario').value = usuario;
-            document.getElementById('loginSenha').value = senha;
-        }, 1200);
-    } catch (err) {
-        exibirMsgAuth('Erro ao conectar ao servidor.', 'erro');
+    // Fallback Local
+    const usuarios = obterUsuariosLocais();
+    if (usuarios.some(u => u.usuario.toLowerCase() === usuario.toLowerCase())) {
+        exibirMsgAuth('Este usuário já está cadastrado.', 'erro');
+        return;
     }
+    usuarios.push({ usuario, senha, perfil: 'usuario', status: 'ativo', expiracao: null, criadoEm: new Date().toISOString() });
+    salvarUsuariosLocais(usuarios);
+    exibirMsgAuth('✅ Conta criada com sucesso! Você já pode entrar.', 'sucesso');
+    setTimeout(() => {
+        alternarAbaAuth('login');
+        document.getElementById('loginUsuario').value = usuario;
+        document.getElementById('loginSenha').value = senha;
+    }, 1200);
 }
 
 // 3. VISITANTE DEMO (10 MINUTOS)
@@ -1719,23 +1756,23 @@ async function entrarComoVisitante() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            exibirMsgAuth('Erro ao gerar sessão de visitante.', 'erro');
-            return;
+        if (res.ok) {
+            const dados = await res.json();
+            if (dados.sucesso) {
+                salvarSessao({ usuario: dados.usuario, perfil: 'visitante', expiracao: dados.expiracao });
+                verificarSessao();
+                return;
+            }
         }
+    } catch (err) {}
 
-        salvarSessao({
-            usuario: dados.usuario,
-            perfil: 'visitante',
-            expiracao: dados.expiracao
-        });
-
-        verificarSessao();
-    } catch (err) {
-        exibirMsgAuth('Erro ao conectar ao servidor.', 'erro');
-    }
+    // Fallback Local
+    const randomId = Math.floor(1000 + Math.random() * 9000);
+    const nomeVisitante = `visitante_${randomId}`;
+    const agora = new Date();
+    const expiracao = new Date(agora.getTime() + 10 * 60 * 1000).toISOString();
+    salvarSessao({ usuario: nomeVisitante, perfil: 'visitante', expiracao });
+    verificarSessao();
 }
 
 function iniciarTimerVisitante(expiracaoIso) {
@@ -1753,7 +1790,7 @@ function iniciarTimerVisitante(expiracaoIso) {
             clearInterval(timerIntervalVisitante);
             badge.style.display = 'none';
             localStorage.removeItem(SESSAO_STORAGE_KEY);
-            alert('⏰ O seu tempo de visitante (10 minutos) expirou!\nA conta temporária foi excluída.');
+            alert('⏰ O seu tempo de visitante (10 minutos) expirou!\nA conta temporária foi finalizada.');
             verificarSessao();
             return;
         }
@@ -1866,52 +1903,86 @@ async function salvarAlteracoesPerfil(e) {
                 novaSenha: novaSenha
             })
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            msg.textContent = dados.mensagem || 'Erro ao atualizar perfil.';
-            msg.className = 'auth-msg erro';
-            msg.style.display = 'block';
-            return;
+        if (res.ok) {
+            const dados = await res.json();
+            if (dados.sucesso) {
+                salvarSessao({ ...sessao, usuario: dados.usuario, perfil: dados.perfil });
+                msg.textContent = '✅ Perfil atualizado com sucesso!';
+                msg.className = 'auth-msg sucesso';
+                msg.style.display = 'block';
+                setTimeout(() => { fecharModalPerfil(); verificarSessao(); }, 1200);
+                return;
+            }
         }
+    } catch (err) {}
 
-        salvarSessao({
-            ...sessao,
-            usuario: dados.usuario,
-            perfil: dados.perfil
-        });
-
-        msg.textContent = '✅ Perfil atualizado com sucesso!';
-        msg.className = 'auth-msg sucesso';
-        msg.style.display = 'block';
-
-        setTimeout(() => {
-            fecharModalPerfil();
-            verificarSessao();
-        }, 1200);
-    } catch (err) {
-        msg.textContent = 'Erro de comunicação com o servidor.';
-        msg.className = 'auth-msg erro';
-        msg.style.display = 'block';
+    // Fallback Local
+    const usuarios = obterUsuariosLocais();
+    const conta = usuarios.find(u => u.usuario.toLowerCase() === sessao.usuario.toLowerCase());
+    if (conta) {
+        conta.usuario = novoUsuario;
+        if (novaSenha) conta.senha = novaSenha;
+        salvarUsuariosLocais(usuarios);
     }
+    salvarSessao({ ...sessao, usuario: novoUsuario });
+    msg.textContent = '✅ Perfil atualizado com sucesso!';
+    msg.className = 'auth-msg sucesso';
+    msg.style.display = 'block';
+    setTimeout(() => { fecharModalPerfil(); verificarSessao(); }, 1200);
 }
 
-// ==================== MENUS & PERSISTÊNCIA NO SERVIDOR ====================
+// ==================== MENUS & PERSISTÊNCIA ====================
+const MENUS_TOPO_PADRAO = [
+    { nome: 'Gmail', url: 'https://mail.google.com/', icone: 'fa-solid fa-envelope' },
+    { nome: 'YouTube', url: 'https://www.youtube.com/', icone: 'fa-brands fa-youtube' },
+    { nome: 'Chat GPT', url: 'https://chatgpt.com/', icone: 'fa-solid fa-robot' },
+    { nome: 'Fiserv', url: 'https://sitef2.softwareexpress.com.br/', icone: 'fa-solid fa-credit-card' },
+    { nome: 'Laurenti', url: 'https://laurentiepdltda.zendesk.com/', icone: 'fa-solid fa-headset' },
+    { nome: 'Bradesco', url: 'https://banco.bradesco/', icone: 'fa-solid fa-building-columns' },
+    { nome: 'Caixa', url: 'https://www.caixa.gov.br/', icone: 'fa-solid fa-vault' },
+    { nome: 'I love PDF', url: 'https://www.ilovepdf.com/pt', icone: 'fa-solid fa-file-pdf' }
+];
+
+const MENUS_SISTEMAS_VEIGA = [
+    { nome: 'Agenda', url: 'Caminhos/Agenda.html', icone: 'fa-solid fa-calendar-days' },
+    { nome: 'Senha', url: 'Caminhos/Senhas.html', icone: 'fa-solid fa-key' },
+    { nome: 'Estações Hosts / IP', url: 'Caminhos/Micros.html', icone: 'fa-solid fa-network-wired' },
+    { nome: 'Reinicialização 15/15 Servidores', url: 'Caminhos/Servidores.html', icone: 'fa-solid fa-server' },
+    { nome: 'Relatórios Batch', url: 'Caminhos/RelatoriosBatch.html', icone: 'fa-solid fa-chart-line' },
+    { nome: 'Telas RM', url: 'Caminhos/Telas RM.html', icone: 'fa-solid fa-desktop' },
+    { nome: 'Calcular Jornada', url: 'Caminhos/calcular_jornada.php.html', icone: 'fa-solid fa-clock' },
+    { nome: 'Gertec Busca Preço', url: 'Caminhos/Gertec.html', icone: 'fa-solid fa-barcode' }
+];
+
 async function carregarTodosMenus() {
     const sessao = obterSessao();
     if (!sessao) return;
 
     try {
         const res = await fetch(`/api/menus?usuario=${encodeURIComponent(sessao.usuario)}`);
-        const dados = await res.json();
-        if (dados.sucesso && dados.menus) {
-            menusAtuaisMemoria = dados.menus;
+        if (res.ok) {
+            const dados = await res.json();
+            if (dados.sucesso && dados.menus) {
+                menusAtuaisMemoria = dados.menus;
+            }
         }
-    } catch (e) {
-        console.error('Erro ao carregar menus:', e);
-    }
+    } catch (e) {}
 
-    if (!menusAtuaisMemoria) return;
+    if (!menusAtuaisMemoria) {
+        const key = `portal_veiga_menus_u_${sessao.usuario.toLowerCase()}`;
+        const local = localStorage.getItem(key);
+        if (local) {
+            menusAtuaisMemoria = JSON.parse(local);
+        } else {
+            const ehAdmin = sessao.perfil === 'admin' || sessao.usuario.toLowerCase() === 'veiga';
+            menusAtuaisMemoria = {
+                topo: MENUS_TOPO_PADRAO,
+                sistemas: ehAdmin ? MENUS_SISTEMAS_VEIGA : [],
+                meuslinks: [],
+                outros: ehAdmin ? [{ nome: 'Relógio Biométrico', url: 'Caminhos/Biometrico.html', icone: 'fa-solid fa-fingerprint' }] : []
+            };
+        }
+    }
 
     // 1. Topo
     const topoContainer = document.getElementById('lista-links-topo');
@@ -1971,17 +2042,16 @@ function renderBloco(menuKey, itens, containerId, msgVazio = 'Nenhum item') {
 async function salvarMenusServidor(novosMenus) {
     const sessao = obterSessao();
     if (!sessao) return;
+    menusAtuaisMemoria = novosMenus;
+    localStorage.setItem(`portal_veiga_menus_u_${sessao.usuario.toLowerCase()}`, JSON.stringify(novosMenus));
     try {
         await fetch('/api/menus', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario: sessao.usuario, menus: novosMenus })
         });
-        menusAtuaisMemoria = novosMenus;
-        carregarTodosMenus();
-    } catch (e) {
-        alert('Erro ao salvar dados no servidor.');
-    }
+    } catch (e) {}
+    carregarTodosMenus();
 }
 
 function lidarCliqueLink(e, nome, url, icone) {
@@ -2121,7 +2191,7 @@ function copiarLinkPreview() {
     });
 }
 
-// ==================== PAINEL DE ADMIN (USUÁRIO VEIGA) ====================
+// ==================== PAINEL DE ADMIN ====================
 async function abrirPainelAdmin() {
     await carregarTabelaAdmin();
     document.getElementById('modalAdmin').classList.add('ativo');
@@ -2152,66 +2222,71 @@ function formatarDataExp(dataIso, perfil) {
 }
 
 async function carregarTabelaAdmin() {
+    let usuarios = [];
     try {
         const res = await fetch('/api/admin/usuarios');
-        const dados = await res.json();
-        const usuarios = dados.usuarios || [];
+        if (res.ok) {
+            const dados = await res.json();
+            usuarios = dados.usuarios || [];
+        }
+    } catch (e) {}
 
-        const tbody = document.getElementById('tabelaUsuariosCorpo');
-        tbody.innerHTML = '';
-
-        let total = usuarios.length;
-        let ativos = 0;
-
-        usuarios.forEach((user) => {
-            const ehAdmin = user.perfil === 'admin' || user.usuario.toLowerCase() === 'veiga';
-            const ehVisitante = user.perfil === 'visitante';
-            const expirado = user.expiracao && new Date() > new Date(user.expiracao);
-            
-            let statusBadge = '';
-            if (user.status === 'bloqueado') {
-                statusBadge = '<span class="badge-status status-bloqueado">Bloqueado</span>';
-            } else if (expirado) {
-                statusBadge = '<span class="badge-status status-expirado">Expirado</span>';
-            } else if (ehVisitante) {
-                statusBadge = '<span class="badge-status status-demo">Demo 10min</span>';
-                ativos++;
-            } else {
-                statusBadge = '<span class="badge-status status-ativo">Ativo</span>';
-                ativos++;
-            }
-
-            let perfilBadge = '';
-            if (ehAdmin) {
-                perfilBadge = '<span style="color: #ffcc00; font-weight: bold;"><i class="fa-solid fa-crown"></i> Admin</span>';
-            } else if (ehVisitante) {
-                perfilBadge = '<span style="color: #ffaa00; font-weight: bold;"><i class="fa-solid fa-stopwatch"></i> Visitante</span>';
-            } else {
-                perfilBadge = '<span style="color: #6d8a9c;">Usuário</span>';
-            }
-
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><b>${user.usuario}</b></td>
-                <td>${perfilBadge}</td>
-                <td>${statusBadge}</td>
-                <td>${formatarDataExp(user.expiracao, user.perfil)}</td>
-                <td>
-                    ${!ehAdmin ? `
-                        <button class="btn-admin-acao" title="Definir Tempo de Acesso" onclick="definirTempoAcesso('${user.usuario}')"><i class="fa-solid fa-clock"></i> Tempo</button>
-                        <button class="btn-admin-acao" title="Bloquear / Desbloquear" onclick="alternarStatusUsuario('${user.usuario}')">${user.status === 'bloqueado' ? '<i class="fa-solid fa-unlock"></i> Desbloquear' : '<i class="fa-solid fa-ban"></i> Bloquear'}</button>
-                        <button class="btn-admin-acao btn-admin-excluir" title="Excluir Conta" onclick="excluirContaUsuario('${user.usuario}')"><i class="fa-solid fa-trash"></i></button>
-                    ` : '<span style="color: #6d8a9c; font-size: 11px;">Conta Principal</span>'}
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-
-        document.getElementById('statTotalUsuarios').textContent = total;
-        document.getElementById('statAtivos').textContent = ativos;
-    } catch (e) {
-        console.error('Erro ao carregar lista de usuários:', e);
+    if (usuarios.length === 0) {
+        usuarios = obterUsuariosLocais();
     }
+
+    const tbody = document.getElementById('tabelaUsuariosCorpo');
+    tbody.innerHTML = '';
+
+    let total = usuarios.length;
+    let ativos = 0;
+
+    usuarios.forEach((user) => {
+        const ehAdmin = user.perfil === 'admin' || user.usuario.toLowerCase() === 'veiga';
+        const ehVisitante = user.perfil === 'visitante';
+        const expirado = user.expiracao && new Date() > new Date(user.expiracao);
+        
+        let statusBadge = '';
+        if (user.status === 'bloqueado') {
+            statusBadge = '<span class="badge-status status-bloqueado">Bloqueado</span>';
+        } else if (expirado) {
+            statusBadge = '<span class="badge-status status-expirado">Expirado</span>';
+        } else if (ehVisitante) {
+            statusBadge = '<span class="badge-status status-demo">Demo 10min</span>';
+            ativos++;
+        } else {
+            statusBadge = '<span class="badge-status status-ativo">Ativo</span>';
+            ativos++;
+        }
+
+        let perfilBadge = '';
+        if (ehAdmin) {
+            perfilBadge = '<span style="color: #ffcc00; font-weight: bold;"><i class="fa-solid fa-crown"></i> Admin</span>';
+        } else if (ehVisitante) {
+            perfilBadge = '<span style="color: #ffaa00; font-weight: bold;"><i class="fa-solid fa-stopwatch"></i> Visitante</span>';
+        } else {
+            perfilBadge = '<span style="color: #6d8a9c;">Usuário</span>';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><b>${user.usuario}</b></td>
+            <td>${perfilBadge}</td>
+            <td>${statusBadge}</td>
+            <td>${formatarDataExp(user.expiracao, user.perfil)}</td>
+            <td>
+                ${!ehAdmin ? `
+                    <button class="btn-admin-acao" title="Definir Tempo de Acesso" onclick="definirTempoAcesso('${user.usuario}')"><i class="fa-solid fa-clock"></i> Tempo</button>
+                    <button class="btn-admin-acao" title="Bloquear / Desbloquear" onclick="alternarStatusUsuario('${user.usuario}')">${user.status === 'bloqueado' ? '<i class="fa-solid fa-unlock"></i> Desbloquear' : '<i class="fa-solid fa-ban"></i> Bloquear'}</button>
+                    <button class="btn-admin-acao btn-admin-excluir" title="Excluir Conta" onclick="excluirContaUsuario('${user.usuario}')"><i class="fa-solid fa-trash"></i></button>
+                ` : '<span style="color: #6d8a9c; font-size: 11px;">Conta Principal</span>'}
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('statTotalUsuarios').textContent = total;
+    document.getElementById('statAtivos').textContent = ativos;
 }
 
 async function definirTempoAcesso(usuario) {
@@ -2245,10 +2320,20 @@ async function definirTempoAcesso(usuario) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario, minutos })
         });
-        carregarTabelaAdmin();
-    } catch (e) {
-        alert('Erro ao atualizar tempo.');
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    const u = usuarios.find(x => x.usuario.toLowerCase() === usuario.toLowerCase());
+    if (u) {
+        if (minutos === null) u.expiracao = null;
+        else {
+            let d = new Date();
+            d.setMinutes(d.getMinutes() + minutos);
+            u.expiracao = d.toISOString();
+        }
+        salvarUsuariosLocais(usuarios);
     }
+    carregarTabelaAdmin();
 }
 
 async function alternarStatusUsuario(usuario) {
@@ -2258,22 +2343,28 @@ async function alternarStatusUsuario(usuario) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario })
         });
-        carregarTabelaAdmin();
-    } catch (e) {
-        alert('Erro ao alterar status.');
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    const u = usuarios.find(x => x.usuario.toLowerCase() === usuario.toLowerCase());
+    if (u) {
+        u.status = u.status === 'bloqueado' ? 'ativo' : 'bloqueado';
+        salvarUsuariosLocais(usuarios);
     }
+    carregarTabelaAdmin();
 }
 
 async function excluirContaUsuario(usuario) {
-    if (confirm(`Tem certeza que deseja EXCLUIR permanentemente a conta de "${usuario}" do servidor?`)) {
+    if (confirm(`Tem certeza que deseja EXCLUIR permanentemente a conta de "${usuario}"?`)) {
         try {
-            await fetch(`/api/admin/usuario?usuario=${encodeURIComponent(usuario)}`, {
-                method: 'DELETE'
-            });
-            carregarTabelaAdmin();
-        } catch (e) {
-            alert('Erro ao excluir conta.');
-        }
+            await fetch(`/api/admin/usuario?usuario=${encodeURIComponent(usuario)}`, { method: 'DELETE' });
+        } catch (e) {}
+
+        let usuarios = obterUsuariosLocais();
+        usuarios = usuarios.filter(x => x.usuario.toLowerCase() !== usuario.toLowerCase());
+        salvarUsuariosLocais(usuarios);
+        localStorage.removeItem(`portal_veiga_menus_u_${usuario.toLowerCase()}`);
+        carregarTabelaAdmin();
     }
 }
 
@@ -2288,36 +2379,39 @@ async function abrirCriarUsuarioAdmin() {
     if (!senha) return;
 
     try {
-        const res = await fetch('/api/admin/usuario/criar', {
+        await fetch('/api/admin/usuario/criar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario: usuario.trim(), senha: senha.trim() })
         });
-        const dados = await res.json();
-        if (!dados.sucesso) {
-            alert(dados.mensagem || 'Erro ao criar usuário.');
-            return;
-        }
-        carregarTabelaAdmin();
-    } catch (e) {
-        alert('Erro ao criar usuário.');
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    if (!usuarios.some(u => u.usuario.toLowerCase() === usuario.trim().toLowerCase())) {
+        usuarios.push({ usuario: usuario.trim(), senha: senha.trim(), perfil: 'usuario', status: 'ativo', expiracao: null, criadoEm: new Date().toISOString() });
+        salvarUsuariosLocais(usuarios);
     }
+    carregarTabelaAdmin();
 }
 
 async function abrirCriarVisitanteAdmin() {
+    const randomId = Math.floor(1000 + Math.random() * 9000);
+    const nome = `visitante_${randomId}`;
+    const agora = new Date();
+    const expiracao = new Date(agora.getTime() + 10 * 60 * 1000).toISOString();
+
     try {
-        const res = await fetch('/api/visitante', {
+        await fetch('/api/visitante', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
-        const dados = await res.json();
-        if (dados.sucesso) {
-            carregarTabelaAdmin();
-            alert(`✅ Visitante "${dados.usuario}" criado com sucesso no servidor! Duração de 10 minutos.`);
-        }
-    } catch (e) {
-        alert('Erro ao gerar visitante.');
-    }
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    usuarios.push({ usuario: nome, senha: '', perfil: 'visitante', status: 'ativo', expiracao, criadoEm: agora.toISOString() });
+    salvarUsuariosLocais(usuarios);
+    carregarTabelaAdmin();
+    alert(`✅ Visitante "${nome}" criado com sucesso! Duração de 10 minutos.`);
 }
 
 // ==================== MODAL ADICIONAR / EDITAR LINKS ====================
