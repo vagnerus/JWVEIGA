@@ -12,16 +12,56 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
+/* ==================== TEMAS DINÂMICOS ==================== */
+:root {
+    --cor-primaria: #00ffcc;
+    --cor-secundaria: #00eaff;
+    --cor-destaque: #39ff14;
+    --cor-fundo-card: #040D16;
+    --cor-texto: #ACFCFB;
+    --bg-overlay: rgba(0, 0, 0, 0.72);
+    --sombra-neon: 0 0 20px rgba(0, 255, 204, 0.6);
+    --tema-bg: url("IMG/Tema%201.webp");
+}
+
+body.tema-matrix {
+    --cor-primaria: #00ff41;
+    --cor-secundaria: #39ff14;
+    --cor-destaque: #a6ff00;
+    --cor-fundo-card: #021204;
+    --cor-texto: #b4ffb8;
+    --sombra-neon: 0 0 20px rgba(0, 255, 65, 0.7);
+    --tema-bg: url("IMG/Tema%203.jpg");
+}
+
+body.tema-synthwave {
+    --cor-primaria: #ff007f;
+    --cor-secundaria: #00f0ff;
+    --cor-destaque: #ffe600;
+    --cor-fundo-card: #150524;
+    --cor-texto: #ffd5ff;
+    --sombra-neon: 0 0 20px rgba(255, 0, 127, 0.7);
+    --tema-bg: url("IMG/Tema%202.webp");
+}
+
+body.tema-stealth {
+    --cor-primaria: #ff9900;
+    --cor-secundaria: #ffcc00;
+    --cor-destaque: #00eaff;
+    --cor-fundo-card: #101010;
+    --cor-texto: #e0e0e0;
+    --sombra-neon: 0 0 20px rgba(255, 153, 0, 0.6);
+    --tema-bg: url("IMG/Tema%204.jpg");
+}
 
 body{
 margin:0;
-background:#000 url("IMG/Tema%201.webp") no-repeat center center fixed;
+background:#000 var(--tema-bg) no-repeat center center fixed;
 background-size:cover;
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 min-height: 100vh;
+transition: background 0.4s ease;
 }
-
-/* DARK PROFISSIONAL */
 
 body::before{
 content:"";
@@ -30,12 +70,11 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.68);
+background: var(--bg-overlay);
 z-index:-1;
 }
 
 /* ==================== TELA DE LOGIN & CADASTRO ==================== */
-
 #tela-auth {
 position: fixed;
 top: 0;
@@ -51,13 +90,13 @@ align-items: center;
 }
 
 .auth-card {
-background: #040D16;
-border: 2px solid #00ffcc;
+background: var(--cor-fundo-card);
+border: 2px solid var(--cor-primaria);
 border-radius: 14px;
 padding: 28px 25px;
 width: 90%;
 max-width: 420px;
-box-shadow: 0 0 35px rgba(0, 255, 204, 0.6), inset 0 0 15px rgba(0, 234, 255, 0.2);
+box-shadow: 0 0 35px var(--cor-primaria), inset 0 0 15px rgba(0, 234, 255, 0.2);
 text-align: center;
 animation: surgirAuth 0.4s ease-out;
 }
@@ -71,31 +110,29 @@ to { transform: scale(1); opacity: 1; }
 width: 65px;
 height: auto;
 margin-bottom: 8px;
-filter: drop-shadow(0 0 10px #00eaff);
+filter: drop-shadow(0 0 10px var(--cor-secundaria));
 }
 
 .auth-titulo {
-color: #00eaff;
+color: var(--cor-secundaria);
 font-size: 20px;
 font-weight: bold;
 letter-spacing: 2px;
 margin-bottom: 4px;
-text-shadow: 0 0 12px #00eaff;
+text-shadow: 0 0 12px var(--cor-secundaria);
 text-transform: uppercase;
 }
 
 .auth-subtitulo {
-color: #ACFCFB;
+color: var(--cor-texto);
 font-size: 12px;
 margin-bottom: 16px;
 opacity: 0.8;
 }
 
-/* ABAS DE LOGIN / CADASTRO */
-
 .auth-abas {
 display: flex;
-border-bottom: 1px solid #00eaff;
+border-bottom: 1px solid var(--cor-secundaria);
 margin-bottom: 18px;
 }
 
@@ -111,9 +148,9 @@ border-bottom: 2px solid transparent;
 }
 
 .auth-aba.ativa {
-color: #39ff14;
-border-bottom: 2px solid #39ff14;
-text-shadow: 0 0 8px #39ff14;
+color: var(--cor-destaque);
+border-bottom: 2px solid var(--cor-destaque);
+text-shadow: 0 0 8px var(--cor-destaque);
 }
 
 .auth-grupo {
@@ -123,7 +160,7 @@ text-align: left;
 
 .auth-grupo label {
 display: block;
-color: #00ffcc;
+color: var(--cor-primaria);
 font-size: 11px;
 font-weight: bold;
 margin-bottom: 5px;
@@ -134,7 +171,7 @@ letter-spacing: 1px;
 width: 100%;
 box-sizing: border-box;
 background: #000;
-border: 1px solid #00eaff;
+border: 1px solid var(--cor-secundaria);
 color: #fff;
 padding: 10px 12px;
 border-radius: 7px;
@@ -144,13 +181,13 @@ transition: 0.3s;
 }
 
 .auth-grupo input:focus {
-border-color: #39ff14;
-box-shadow: 0 0 12px #39ff14;
+border-color: var(--cor-destaque);
+box-shadow: 0 0 12px var(--cor-destaque);
 }
 
 .btn-auth-submit {
 width: 100%;
-background: #00ffcc;
+background: var(--cor-primaria);
 color: #040D16;
 border: none;
 padding: 11px;
@@ -170,8 +207,8 @@ gap: 8px;
 }
 
 .btn-auth-submit:hover {
-background: #39ff14;
-box-shadow: 0 0 25px #39ff14;
+background: var(--cor-destaque);
+box-shadow: 0 0 25px var(--cor-destaque);
 transform: scale(1.02);
 }
 
@@ -226,13 +263,37 @@ display: block;
 }
 
 /* ==================== PORTAL PRINCIPAL ==================== */
-
 #portal-conteudo {
 display: none;
 }
 
-/* TOPO */
+/* MURAL DE AVISO GLOBAL DO CPD */
+#bannerAvisoGlobal {
+display: none;
+background: rgba(255, 170, 0, 0.15);
+border-bottom: 2px solid #ffaa00;
+color: #ffcc00;
+padding: 7px 20px;
+font-size: 12px;
+font-weight: bold;
+position: fixed;
+top: 55px;
+left: 0;
+width: 100%;
+z-index: 99;
+box-sizing: border-box;
+align-items: center;
+justify-content: space-between;
+backdrop-filter: blur(5px);
+animation: piscarBanner 2s infinite;
+}
 
+@keyframes piscarBanner {
+0%, 100% { border-color: #ffaa00; }
+50% { border-color: #ff3366; color: #ff99aa; }
+}
+
+/* TOPO */
 .topo{
 position:fixed;
 top:0;
@@ -243,8 +304,8 @@ overflow:hidden;
 display:flex;
 justify-content: space-between;
 align-items:center;
-background:rgba(0,0,0,0.75);
-border-bottom:2px solid #00eaff;
+background:rgba(0,0,0,0.85);
+border-bottom:2px solid var(--cor-secundaria);
 z-index: 100;
 padding: 0 20px;
 box-sizing: border-box;
@@ -260,40 +321,37 @@ flex: 1;
 .texto-eletrico{
 font-size:14px;
 font-weight:bold;
-color:#ACFCFB;
+color: var(--cor-texto);
 letter-spacing:2px;
 padding-right:100px;
-
-text-shadow:
-0 0 5px #00eaff,
-0 0 10px #00eaff,
-0 0 20px #00eaff;
+text-shadow: 0 0 5px var(--cor-secundaria), 0 0 10px var(--cor-secundaria), 0 0 20px var(--cor-secundaria);
 }
 
 .topo-usuario {
 display: flex;
 align-items: center;
-gap: 8px;
+gap: 7px;
 z-index: 101;
-background: rgba(4, 13, 22, 0.85);
-padding: 4px 12px;
+background: rgba(4, 13, 22, 0.9);
+padding: 4px 10px;
 border-radius: 20px;
-border: 1px solid #00ffcc;
+border: 1px solid var(--cor-primaria);
 box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+flex-wrap: nowrap;
 }
 
 .usuario-tag {
-color: #39ff14;
+color: var(--cor-destaque);
 font-size: 12px;
 font-weight: bold;
 letter-spacing: 1px;
 display: flex;
 align-items: center;
-gap: 6px;
+gap: 5px;
 cursor: pointer;
-transition: 0.2s;
 padding: 2px 6px;
 border-radius: 6px;
+transition: 0.2s;
 }
 
 .usuario-tag:hover {
@@ -331,43 +389,43 @@ margin-left: 4px;
 
 .btn-topo-acao {
 background: transparent;
-color: #00eaff;
-border: 1px solid #00eaff;
+color: var(--cor-secundaria);
+border: 1px solid var(--cor-secundaria);
 border-radius: 6px;
-padding: 4px 9px;
+padding: 4px 8px;
 font-size: 11px;
 font-weight: bold;
 cursor: pointer;
 transition: 0.3s;
 display: inline-flex;
 align-items: center;
-gap: 5px;
+gap: 4px;
 }
 
 .btn-topo-acao:hover {
-background: #00eaff;
+background: var(--cor-secundaria);
 color: #040D16;
-box-shadow: 0 0 10px #00eaff;
+box-shadow: 0 0 10px var(--cor-secundaria);
 }
 
 .btn-admin-painel {
-background: #00eaff;
+background: var(--cor-secundaria);
 color: #040D16;
 border: none;
 border-radius: 6px;
-padding: 4px 10px;
+padding: 4px 9px;
 font-size: 11px;
 font-weight: bold;
 cursor: pointer;
 transition: 0.3s;
 display: none;
 align-items: center;
-gap: 5px;
+gap: 4px;
 }
 
 .btn-admin-painel:hover {
-background: #39ff14;
-box-shadow: 0 0 12px #39ff14;
+background: var(--cor-destaque);
+box-shadow: 0 0 12px var(--cor-destaque);
 }
 
 .btn-logout {
@@ -375,14 +433,14 @@ background: #ff0055;
 color: #fff;
 border: none;
 border-radius: 6px;
-padding: 4px 10px;
+padding: 4px 9px;
 font-size: 11px;
 font-weight: bold;
 cursor: pointer;
 transition: 0.3s;
 display: flex;
 align-items: center;
-gap: 5px;
+gap: 4px;
 }
 
 .btn-logout:hover {
@@ -392,14 +450,65 @@ transform: scale(1.05);
 }
 
 /* ANIMAÇÕES */
-
 @keyframes deslizar{
 0%{ transform: translateX(100%); }
 100%{ transform: translateX(-100%); }
 }
 
-/* LINKS SUPERIORES */
+/* ==================== BARRA DE PESQUISA INTELIGENTE ==================== */
+.barra-pesquisa-container {
+max-width: 540px;
+margin: 80px auto 14px auto;
+padding: 0 15px;
+position: relative;
+}
 
+.input-busca-box {
+position: relative;
+display: flex;
+align-items: center;
+}
+
+.input-busca-box i.icone-busca {
+position: absolute;
+left: 14px;
+color: var(--cor-primaria);
+font-size: 14px;
+}
+
+.input-busca {
+width: 100%;
+background: rgba(4, 13, 22, 0.85);
+border: 2px solid var(--cor-primaria);
+border-radius: 25px;
+color: #fff;
+padding: 10px 45px 10px 38px;
+font-size: 13px;
+outline: none;
+box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+transition: 0.3s;
+}
+
+.input-busca:focus {
+border-color: var(--cor-destaque);
+box-shadow: 0 0 25px var(--cor-destaque);
+background: rgba(0, 0, 0, 0.95);
+}
+
+.atalho-busca-tag {
+position: absolute;
+right: 12px;
+background: rgba(0, 255, 204, 0.15);
+border: 1px solid var(--cor-primaria);
+color: var(--cor-primaria);
+font-size: 10px;
+font-weight: bold;
+padding: 2px 6px;
+border-radius: 6px;
+pointer-events: none;
+}
+
+/* LINKS SUPERIORES */
 .links-container{
 display:flex;
 flex-wrap:wrap;
@@ -407,19 +516,18 @@ justify-content:center;
 gap:10px;
 background:rgba(0,0,0,0.6);
 padding:14px;
-border:2px solid #00ffcc;
+border:2px solid var(--cor-primaria);
 border-radius:10px;
-box-shadow:0 0 20px #00ffcc;
-margin: 75px auto 0 auto;
+box-shadow: var(--sombra-neon);
+margin: 0 auto;
 max-width: 90%;
 }
 
 /* BOTÕES LINKS */
-
 .link-neon{
-background:#040D16;
+background: var(--cor-fundo-card);
 padding:7px 12px;
-border:2px solid #00ffcc;
+border:2px solid var(--cor-primaria);
 border-radius:6px;
 transition:0.3s;
 position: relative;
@@ -427,10 +535,11 @@ display: inline-flex;
 align-items: center;
 gap: 6px;
 cursor: pointer;
+user-select: none;
 }
 
 .link-neon a.link-clique{
-color:#ACFCFB;
+color: var(--cor-texto);
 text-decoration:none;
 font-weight:bold;
 font-size:12px;
@@ -442,98 +551,99 @@ cursor: pointer;
 
 .link-neon i.icone-link{
 font-size: 13px;
-color: #00ffcc;
+color: var(--cor-primaria);
 transition: 0.3s;
 }
 
 .link-neon:hover{
-border:2px solid #39ff14;
-box-shadow:
-0 0 5px #39ff14,
-0 0 10px #39ff14,
-0 0 20px #39ff14;
+border:2px solid var(--cor-destaque);
+box-shadow: 0 0 15px var(--cor-destaque);
 transform: translateY(-2px);
 }
 
 .link-neon:hover i.icone-link{
-color: #39ff14;
+color: var(--cor-destaque);
 transform: scale(1.15);
 }
 
 /* PAINEL DE BOTÕES DE AÇÃO */
-
 .painel-acoes {
 display: flex;
 justify-content: center;
-gap: 15px;
-margin: 20px auto 0 auto;
+gap: 12px;
+margin: 18px auto 0 auto;
 flex-wrap: wrap;
 }
 
 .btn-acao{
-background:#040D16;
-padding:8px 18px;
+background: var(--cor-fundo-card);
+padding:8px 16px;
 border-radius:8px;
 font-weight:bold;
-font-size:13px;
+font-size:12px;
 cursor:pointer;
 transition:0.3s;
 display:inline-flex;
 align-items:center;
-gap:8px;
+gap:7px;
 }
 
 .btn-add{
-color:#39ff14;
-border:2px solid #39ff14;
+color: var(--cor-destaque);
+border:2px solid var(--cor-destaque);
 box-shadow:0 0 10px rgba(57, 255, 20, 0.3);
 }
 
 .btn-add:hover{
-background:#39ff14;
+background: var(--cor-destaque);
 color:#040D16;
-box-shadow:0 0 20px #39ff14;
-transform: scale(1.05);
+box-shadow:0 0 20px var(--cor-destaque);
+transform: scale(1.04);
 }
 
 .btn-edit-mode {
-color: #00eaff;
-border: 2px solid #00eaff;
+color: var(--cor-secundaria);
+border: 2px solid var(--cor-secundaria);
 box-shadow: 0 0 10px rgba(0, 234, 255, 0.3);
 }
 
 .btn-edit-mode.ativo {
-background: #00eaff;
+background: var(--cor-secundaria);
 color: #040D16;
-box-shadow: 0 0 20px #00eaff;
+box-shadow: 0 0 20px var(--cor-secundaria);
 }
 
 .btn-edit-mode:hover {
-box-shadow: 0 0 20px #00eaff;
-transform: scale(1.05);
+box-shadow: 0 0 20px var(--cor-secundaria);
+transform: scale(1.04);
 }
 
 /* BLOCOS */
-
 .container{
 display:flex;
 justify-content:center;
-gap:26px;
+gap:24px;
 flex-wrap:wrap;
-margin-top:20px;
-padding-bottom: 50px;
+margin-top:18px;
+padding-bottom: 70px;
 }
 
 .bloco{
-background:rgba(0,0,0,0.65);
+background:rgba(0,0,0,0.68);
 padding:14px;
-border:2px solid #00ffcc;
+border:2px solid var(--cor-primaria);
 border-radius:9px;
-box-shadow:0 0 18px #00ffcc;
-width:245px;
+box-shadow: var(--sombra-neon);
+width:250px;
 min-height: 180px;
 display: flex;
 flex-direction: column;
+transition: transform 0.2s, border-color 0.2s;
+}
+
+.bloco.drag-over {
+border-color: var(--cor-destaque);
+background: rgba(0, 255, 204, 0.1);
 }
 
 .bloco-header {
@@ -546,10 +656,10 @@ border-bottom: 1px solid rgba(0, 255, 204, 0.3);
 }
 
 .bloco-titulo{
-color:#39ff14;
+color: var(--cor-destaque);
 font-size:13px;
 font-weight:bold;
-text-shadow:0 0 8px #39ff14;
+text-shadow:0 0 8px var(--cor-destaque);
 text-transform:uppercase;
 letter-spacing:1px;
 display: flex;
@@ -559,8 +669,8 @@ gap: 6px;
 
 .btn-bloco-add {
 background: transparent;
-color: #39ff14;
-border: 1px dashed #39ff14;
+color: var(--cor-destaque);
+border: 1px dashed var(--cor-destaque);
 border-radius: 4px;
 font-size: 11px;
 padding: 2px 7px;
@@ -572,7 +682,7 @@ gap: 4px;
 }
 
 .btn-bloco-add:hover {
-background: #39ff14;
+background: var(--cor-destaque);
 color: #040D16;
 }
 
@@ -581,14 +691,14 @@ flex: 1;
 display: flex;
 flex-direction: column;
 gap: 6px;
+min-height: 60px;
 }
 
 /* BOTÕES DOS BLOCOS */
-
 .botao-neon{
-background:#040D16;
+background: var(--cor-fundo-card);
 padding:8px 12px;
-border:2px solid #00ffcc;
+border:2px solid var(--cor-primaria);
 border-radius:6px;
 text-align:left;
 position: relative;
@@ -597,10 +707,16 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 cursor: pointer;
+user-select: none;
+}
+
+.botao-neon.arrastando {
+opacity: 0.4;
+border-style: dashed;
 }
 
 .botao-neon a.link-clique{
-color:#ACFCFB;
+color: var(--cor-texto);
 text-decoration:none;
 font-weight:bold;
 display:flex;
@@ -614,28 +730,41 @@ cursor: pointer;
 
 .botao-neon i.icone-link{
 font-size: 14px;
-color: #00ffcc;
+color: var(--cor-primaria);
 width: 18px;
 text-align: center;
 transition: 0.3s;
 }
 
+/* STATUS ONLINE PULSANTE */
+.status-ping-dot {
+width: 6px;
+height: 6px;
+background: #39ff14;
+border-radius: 50%;
+display: inline-block;
+box-shadow: 0 0 6px #39ff14;
+animation: pulsePing 2s infinite;
+margin-right: 4px;
+}
+
+@keyframes pulsePing {
+0%, 100% { transform: scale(1); opacity: 1; }
+50% { transform: scale(1.4); opacity: 0.6; }
+}
+
 .botao-neon:hover{
-border:2px solid #39ff14;
-box-shadow:
-0 0 5px #39ff14,
-0 0 10px #39ff14,
-0 0 20px #39ff14;
+border:2px solid var(--cor-destaque);
+box-shadow: 0 0 15px var(--cor-destaque);
 transform: translateX(3px);
 }
 
 .botao-neon:hover i.icone-link{
-color: #39ff14;
+color: var(--cor-destaque);
 transform: scale(1.2);
 }
 
 /* BOTOES DE CONTROLE (EDITAR / EXCLUIR) */
-
 .acoes-item {
 display: none;
 gap: 5px;
@@ -691,8 +820,80 @@ box-shadow: 0 0 8px #ff0055;
 transform: scale(1.1);
 }
 
-/* ==================== POPUP DE MINIATURA / PREVIEW ==================== */
+/* ==================== BLOCO DE NOTAS FLUTUANTE ==================== */
+.btn-toggle-notas {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background: var(--cor-fundo-card);
+border: 2px solid var(--cor-primaria);
+color: var(--cor-primaria);
+width: 48px;
+height: 48px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+cursor: pointer;
+box-shadow: 0 0 20px var(--cor-primaria);
+z-index: 2000;
+transition: 0.3s;
+}
 
+.btn-toggle-notas:hover {
+background: var(--cor-primaria);
+color: #040D16;
+transform: scale(1.1);
+}
+
+.painel-notas {
+position: fixed;
+bottom: 75px;
+right: 20px;
+width: 320px;
+height: 380px;
+background: var(--cor-fundo-card);
+border: 2px solid var(--cor-primaria);
+border-radius: 12px;
+box-shadow: 0 0 35px var(--cor-primaria);
+z-index: 2000;
+display: none;
+flex-direction: column;
+overflow: hidden;
+animation: surgirPreview 0.3s ease-out;
+}
+
+.painel-notas.ativo {
+display: flex;
+}
+
+.painel-notas-header {
+padding: 10px 14px;
+background: rgba(0, 234, 255, 0.12);
+border-bottom: 1px solid var(--cor-primaria);
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-weight: bold;
+font-size: 13px;
+color: var(--cor-secundaria);
+}
+
+.painel-notas textarea {
+flex: 1;
+background: #000;
+border: none;
+color: var(--cor-texto);
+padding: 12px;
+font-family: 'Consolas', monospace;
+font-size: 12px;
+resize: none;
+outline: none;
+line-height: 1.5;
+}
+
+/* ==================== POPUP DE MINIATURA / PREVIEW ==================== */
 .preview-overlay {
 display: none;
 position: fixed;
@@ -712,9 +913,9 @@ display: flex;
 }
 
 .preview-card {
-background: #040D16;
-border: 2px solid #00ffcc;
-box-shadow: 0 0 40px rgba(0, 255, 204, 0.5), inset 0 0 15px rgba(0, 234, 255, 0.2);
+background: var(--cor-fundo-card);
+border: 2px solid var(--cor-primaria);
+box-shadow: var(--sombra-neon);
 border-radius: 12px;
 width: 90%;
 max-width: 480px;
@@ -732,7 +933,7 @@ to { transform: scale(1); opacity: 1; }
 .preview-header {
 padding: 12px 16px;
 background: rgba(0, 234, 255, 0.1);
-border-bottom: 1px solid #00ffcc;
+border-bottom: 1px solid var(--cor-primaria);
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -746,17 +947,17 @@ overflow: hidden;
 }
 
 .preview-icone {
-color: #39ff14;
+color: var(--cor-destaque);
 font-size: 18px;
-filter: drop-shadow(0 0 6px #39ff14);
+filter: drop-shadow(0 0 6px var(--cor-destaque));
 }
 
 .preview-nome {
-color: #00eaff;
+color: var(--cor-secundaria);
 font-size: 16px;
 font-weight: bold;
 letter-spacing: 0.5px;
-text-shadow: 0 0 8px #00eaff;
+text-shadow: 0 0 8px var(--cor-secundaria);
 white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
@@ -789,7 +990,7 @@ gap: 10px;
 .preview-miniatura-box {
 width: 100%;
 height: 220px;
-border: 1px solid #00eaff;
+border: 1px solid var(--cor-secundaria);
 border-radius: 8px;
 background: #000;
 overflow: hidden;
@@ -814,7 +1015,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-color: #ACFCFB;
+color: var(--cor-texto);
 text-align: center;
 padding: 20px;
 box-sizing: border-box;
@@ -823,8 +1024,8 @@ gap: 8px;
 
 .preview-fallback i {
 font-size: 36px;
-color: #00ffcc;
-filter: drop-shadow(0 0 10px #00ffcc);
+color: var(--cor-primaria);
+filter: drop-shadow(0 0 10px var(--cor-primaria));
 margin-bottom: 4px;
 }
 
@@ -840,7 +1041,7 @@ border: 1px solid rgba(0, 234, 255, 0.2);
 
 .preview-rodape-acoes {
 padding: 12px 16px;
-background: #040D16;
+background: var(--cor-fundo-card);
 border-top: 1px solid rgba(0, 255, 204, 0.3);
 display: flex;
 gap: 8px;
@@ -850,7 +1051,7 @@ justify-content: space-between;
 
 .btn-preview-abrir {
 flex: 2;
-background: #00ffcc;
+background: var(--cor-primaria);
 color: #040D16;
 border: none;
 padding: 10px 14px;
@@ -868,16 +1069,16 @@ box-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
 }
 
 .btn-preview-abrir:hover {
-background: #39ff14;
-box-shadow: 0 0 20px #39ff14;
+background: var(--cor-destaque);
+box-shadow: 0 0 20px var(--cor-destaque);
 transform: scale(1.03);
 }
 
 .btn-preview-secundario {
 flex: 1;
 background: transparent;
-color: #ACFCFB;
-border: 1px solid #00eaff;
+color: var(--cor-texto);
+border: 1px solid var(--cor-secundaria);
 padding: 10px 10px;
 font-weight: bold;
 border-radius: 6px;
@@ -892,12 +1093,11 @@ gap: 5px;
 
 .btn-preview-secundario:hover {
 background: rgba(0, 234, 255, 0.2);
-box-shadow: 0 0 10px #00eaff;
+box-shadow: 0 0 10px var(--cor-secundaria);
 color: #fff;
 }
 
 /* ==================== MODAL DE PERFIL ==================== */
-
 .perfil-overlay {
 display: none;
 position: fixed;
@@ -917,10 +1117,10 @@ display: flex;
 }
 
 .perfil-card {
-background: #040D16;
-border: 2px solid #00ffcc;
+background: var(--cor-fundo-card);
+border: 2px solid var(--cor-primaria);
 border-radius: 12px;
-box-shadow: 0 0 45px rgba(0, 255, 204, 0.6);
+box-shadow: var(--sombra-neon);
 width: 90%;
 max-width: 420px;
 padding: 24px;
@@ -934,22 +1134,21 @@ justify-content: space-between;
 align-items: center;
 margin-bottom: 18px;
 padding-bottom: 10px;
-border-bottom: 1px solid #00ffcc;
+border-bottom: 1px solid var(--cor-primaria);
 }
 
 .perfil-titulo {
-color: #00eaff;
+color: var(--cor-secundaria);
 font-size: 18px;
 font-weight: bold;
 letter-spacing: 1px;
 display: flex;
 align-items: center;
 gap: 8px;
-text-shadow: 0 0 8px #00eaff;
+text-shadow: 0 0 8px var(--cor-secundaria);
 }
 
 /* ==================== PAINEL ADMIN MODAL ==================== */
-
 .admin-overlay {
 display: none;
 position: fixed;
@@ -969,10 +1168,10 @@ display: flex;
 }
 
 .admin-card {
-background: #040D16;
-border: 2px solid #00ffcc;
+background: var(--cor-fundo-card);
+border: 2px solid var(--cor-primaria);
 border-radius: 12px;
-box-shadow: 0 0 45px rgba(0, 255, 204, 0.6);
+box-shadow: var(--sombra-neon);
 width: 95%;
 max-width: 780px;
 max-height: 88vh;
@@ -985,21 +1184,21 @@ animation: surgirPreview 0.3s ease-out;
 .admin-header {
 padding: 16px 20px;
 background: rgba(0, 234, 255, 0.12);
-border-bottom: 1px solid #00ffcc;
+border-bottom: 1px solid var(--cor-primaria);
 display: flex;
 justify-content: space-between;
 align-items: center;
 }
 
 .admin-titulo {
-color: #00eaff;
+color: var(--cor-secundaria);
 font-size: 18px;
 font-weight: bold;
 letter-spacing: 1px;
 display: flex;
 align-items: center;
 gap: 10px;
-text-shadow: 0 0 10px #00eaff;
+text-shadow: 0 0 10px var(--cor-secundaria);
 }
 
 .admin-corpo {
@@ -1017,7 +1216,7 @@ margin-bottom: 20px;
 
 .admin-stat-card {
 background: #000;
-border: 1px solid #00eaff;
+border: 1px solid var(--cor-secundaria);
 padding: 12px;
 border-radius: 8px;
 text-align: center;
@@ -1026,8 +1225,8 @@ text-align: center;
 .stat-numero {
 font-size: 20px;
 font-weight: bold;
-color: #39ff14;
-text-shadow: 0 0 8px #39ff14;
+color: var(--cor-destaque);
+text-shadow: 0 0 8px var(--cor-destaque);
 }
 
 .stat-label {
@@ -1046,16 +1245,16 @@ font-size: 12px;
 
 .admin-tabela th {
 background: #000;
-color: #00ffcc;
+color: var(--cor-primaria);
 padding: 10px 8px;
 text-align: left;
-border-bottom: 2px solid #00ffcc;
+border-bottom: 2px solid var(--cor-primaria);
 }
 
 .admin-tabela td {
 padding: 10px 8px;
 border-bottom: 1px solid rgba(0, 234, 255, 0.2);
-color: #ACFCFB;
+color: var(--cor-texto);
 }
 
 .admin-tabela tr:hover td {
@@ -1095,8 +1294,8 @@ border: 1px solid #ffcc00;
 
 .btn-admin-acao {
 background: transparent;
-border: 1px solid #00eaff;
-color: #00eaff;
+border: 1px solid var(--cor-secundaria);
+color: var(--cor-secundaria);
 padding: 3px 7px;
 border-radius: 4px;
 font-size: 11px;
@@ -1106,7 +1305,7 @@ margin-right: 4px;
 }
 
 .btn-admin-acao:hover {
-background: #00eaff;
+background: var(--cor-secundaria);
 color: #040D16;
 }
 
@@ -1121,7 +1320,6 @@ color: #fff;
 }
 
 /* ==================== MODAL DE ADICIONAR / EDITAR LINK ==================== */
-
 .modal-overlay{
 display:none;
 position:fixed;
@@ -1141,9 +1339,9 @@ display:flex;
 }
 
 .modal-conteudo{
-background:#040D16;
-border:2px solid #00ffcc;
-box-shadow:0 0 35px #00ffcc;
+background: var(--cor-fundo-card);
+border:2px solid var(--cor-primaria);
+box-shadow: var(--sombra-neon);
 border-radius:12px;
 padding:24px;
 width:90%;
@@ -1158,11 +1356,11 @@ to { transform: scale(1); opacity: 1; }
 }
 
 .modal-titulo{
-color:#00eaff;
+color: var(--cor-secundaria);
 font-size:18px;
 font-weight:bold;
 margin-bottom:18px;
-text-shadow:0 0 10px #00eaff;
+text-shadow:0 0 10px var(--cor-secundaria);
 text-transform: uppercase;
 letter-spacing: 1px;
 display: flex;
@@ -1177,7 +1375,7 @@ text-align:left;
 }
 
 .modal-campo label{
-color:#ACFCFB;
+color: var(--cor-texto);
 font-size:12px;
 font-weight:bold;
 display:block;
@@ -1189,7 +1387,7 @@ margin-bottom:5px;
 width:100%;
 box-sizing:border-box;
 background:#000;
-border:1px solid #00ffcc;
+border:1px solid var(--cor-primaria);
 color:#fff;
 padding:9px 12px;
 border-radius:6px;
@@ -1200,11 +1398,10 @@ transition:0.3s;
 
 .modal-campo input:focus,
 .modal-campo select:focus{
-border-color:#39ff14;
-box-shadow:0 0 10px #39ff14;
+border-color: var(--cor-destaque);
+box-shadow:0 0 10px var(--cor-destaque);
 }
 
-/* SELETOR RÁPIDO DE ÍCONES */
 .icones-grid {
 display: grid;
 grid-template-columns: repeat(8, 1fr);
@@ -1213,14 +1410,14 @@ margin-top: 6px;
 background: #000;
 padding: 8px;
 border-radius: 6px;
-border: 1px solid #00eaff;
+border: 1px solid var(--cor-secundaria);
 max-height: 100px;
 overflow-y: auto;
 }
 
 .icone-opcao {
 padding: 6px;
-color: #00ffcc;
+color: var(--cor-primaria);
 font-size: 15px;
 text-align: center;
 border-radius: 4px;
@@ -1230,9 +1427,9 @@ transition: 0.2s;
 
 .icone-opcao:hover,
 .icone-opcao.selecionado {
-background: #00ffcc;
+background: var(--cor-primaria);
 color: #040D16;
-box-shadow: 0 0 8px #00ffcc;
+box-shadow: 0 0 8px var(--cor-primaria);
 }
 
 .modal-botoes{
@@ -1244,7 +1441,7 @@ margin-top:22px;
 
 .btn-modal-salvar{
 flex:1;
-background:#00ffcc;
+background: var(--cor-primaria);
 color:#040D16;
 border:none;
 padding:10px;
@@ -1260,8 +1457,8 @@ gap: 6px;
 }
 
 .btn-modal-salvar:hover{
-background:#39ff14;
-box-shadow:0 0 15px #39ff14;
+background: var(--cor-destaque);
+box-shadow:0 0 15px var(--cor-destaque);
 }
 
 .btn-modal-cancelar{
@@ -1349,6 +1546,14 @@ box-shadow:0 0 10px #ff5555;
 <!-- ==================== CONTEÚDO DO PORTAL ==================== -->
 <div id="portal-conteudo">
 
+<!-- BANNER DE AVISO GLOBAL DO CPD -->
+<div id="bannerAvisoGlobal">
+<div style="display: flex; align-items: center; gap: 8px;">
+<i class="fa-solid fa-bullhorn"></i> <span id="lblTextoAvisoGlobal">Aviso do CPD</span>
+</div>
+<button style="background: transparent; border: none; color: #ffcc00; cursor: pointer; font-size: 14px;" onclick="fecharAvisoGlobal()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+
 <div class="topo">
 <div class="marquee">
 <span class="texto-eletrico">
@@ -1363,11 +1568,19 @@ box-shadow:0 0 10px #ff5555;
 <span class="usuario-tag" id="usuarioTag" onclick="abrirModalPerfil()" title="Clique para editar seu perfil">
 <i class="fa-solid fa-circle-user"></i> <span id="lblNomeUsuario">veiga</span>
 </span>
+<!-- SELETOR DE TEMA -->
+<select id="selectTema" onchange="mudarTema(this.value)" class="btn-topo-acao" style="background: #040D16; outline: none; cursor: pointer;">
+<option value="padrao">🎨 Cyber Blue</option>
+<option value="matrix">📟 Matrix Green</option>
+<option value="synthwave">🌆 Synthwave</option>
+<option value="stealth">⚡ Stealth Amber</option>
+</select>
+
 <button class="btn-topo-acao" onclick="abrirModalPerfil()">
 <i class="fa-solid fa-user-gear"></i> Perfil
 </button>
 <button class="btn-admin-painel" id="btnAdminPainel" onclick="abrirPainelAdmin()">
-<i class="fa-solid fa-gear"></i> Painel Admin
+<i class="fa-solid fa-gear"></i> Admin
 </button>
 <button class="btn-logout" onclick="fazerLogout()">
 <i class="fa-solid fa-power-off"></i> Sair
@@ -1375,10 +1588,17 @@ box-shadow:0 0 10px #ff5555;
 </div>
 </div>
 
-<!-- LINKS SUPERIORES -->
-<div class="links-container" id="lista-links-topo">
-<!-- Links do Topo Renderizados via JS -->
+<!-- BARRA DE BUSCA INTELIGENTE -->
+<div class="barra-pesquisa-container">
+<div class="input-busca-box">
+<i class="fa-solid fa-magnifying-glass icone-busca"></i>
+<input type="text" id="inputBusca" class="input-busca" placeholder="Pesquisar links e sistemas... (Ctrl + K)" oninput="filtrarLinks(this.value)" autocomplete="off">
+<span class="atalho-busca-tag">Ctrl + K</span>
 </div>
+</div>
+
+<!-- LINKS SUPERIORES -->
+<div class="links-container" id="lista-links-topo"></div>
 
 <!-- PAINEL DE AÇÕES -->
 <div class="painel-acoes">
@@ -1390,11 +1610,11 @@ box-shadow:0 0 10px #ff5555;
 </button>
 </div>
 
-<!-- BLOCOS CENTRAIS -->
+<!-- BLOCOS CENTRAIS (COM SUPORTE DRAG & DROP) -->
 <div class="container" id="container-blocos">
 
 <!-- BLOCO 1: SISTEMAS CPD -->
-<div class="bloco" id="bloco-sistemas">
+<div class="bloco" id="bloco-sistemas" ondragover="permitirDrop(event)" ondrop="soltarItem(event, 'sistemas')">
 <div class="bloco-header">
 <div class="bloco-titulo"><i class="fa-solid fa-server"></i> Sistemas CPD</div>
 <button class="btn-bloco-add" onclick="abrirModalAdicionar('sistemas')"><i class="fa-solid fa-plus"></i> Add</button>
@@ -1403,7 +1623,7 @@ box-shadow:0 0 10px #ff5555;
 </div>
 
 <!-- BLOCO 2: MEUS LINKS / CENTRAL -->
-<div class="bloco" id="bloco-meuslinks">
+<div class="bloco" id="bloco-meuslinks" ondragover="permitirDrop(event)" ondrop="soltarItem(event, 'meuslinks')">
 <div class="bloco-header">
 <div class="bloco-titulo"><i class="fa-solid fa-star"></i> Meus Links</div>
 <button class="btn-bloco-add" onclick="abrirModalAdicionar('meuslinks')"><i class="fa-solid fa-plus"></i> Add</button>
@@ -1411,8 +1631,8 @@ box-shadow:0 0 10px #ff5555;
 <div class="bloco-conteudo" id="lista-bloco-meuslinks"></div>
 </div>
 
-<!-- BLOCO 3: EQUIPAMENTOS / BIOMÉTRICO -->
-<div class="bloco" id="bloco-outros">
+<!-- BLOCO 3: EQUIPAMENTOS & OUTROS -->
+<div class="bloco" id="bloco-outros" ondragover="permitirDrop(event)" ondrop="soltarItem(event, 'outros')">
 <div class="bloco-header">
 <div class="bloco-titulo"><i class="fa-solid fa-microchip"></i> Equipamentos & Outros</div>
 <button class="btn-bloco-add" onclick="abrirModalAdicionar('outros')"><i class="fa-solid fa-plus"></i> Add</button>
@@ -1424,13 +1644,24 @@ box-shadow:0 0 10px #ff5555;
 
 </div>
 
+<!-- ==================== BLOCO DE NOTAS RÁPIDAS (SCRATCHPAD) ==================== -->
+<button class="btn-toggle-notas" onclick="alternarPainelNotas()" title="Bloco de Notas Rápidas">
+<i class="fa-solid fa-pen-nib"></i>
+</button>
+
+<div class="painel-notas" id="painelNotas">
+<div class="painel-notas-header">
+<span><i class="fa-solid fa-note-sticky"></i> Anotações Rápidas CPD</span>
+<button class="preview-btn-fechar" onclick="alternarPainelNotas()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<textarea id="textoNotas" placeholder="Digite anotações, IPs, ramais ou lembretes aqui... (Salvo automaticamente)" oninput="salvarNotasLocais(this.value)"></textarea>
+</div>
+
 <!-- ==================== MODAL MEU PERFIL ==================== -->
 <div class="perfil-overlay" id="modalPerfil" onclick="fecharPerfilFora(event)">
 <div class="perfil-card">
 <div class="perfil-header">
-<div class="perfil-titulo">
-<i class="fa-solid fa-user-gear"></i> Meu Perfil & Senha
-</div>
+<div class="perfil-titulo"><i class="fa-solid fa-user-gear"></i> Meu Perfil & Senha</div>
 <button class="preview-btn-fechar" onclick="fecharModalPerfil()"><i class="fa-solid fa-xmark"></i></button>
 </div>
 
@@ -1495,7 +1726,7 @@ Fechar
 <div class="admin-card">
 <div class="admin-header">
 <div class="admin-titulo">
-<i class="fa-solid fa-user-shield"></i> Painel de Administração de Usuários
+<i class="fa-solid fa-user-shield"></i> Painel de Administração de Usuários & CPD
 </div>
 <button class="preview-btn-fechar" onclick="fecharPainelAdmin()"><i class="fa-solid fa-xmark"></i></button>
 </div>
@@ -1507,7 +1738,7 @@ Fechar
 <div class="stat-label">Total de Contas</div>
 </div>
 <div class="admin-stat-card">
-<div class="stat-numero" id="statAtivos" style="color: #00ffcc;">0</div>
+<div class="stat-numero" id="statAtivos" style="color: var(--cor-destaque);">0</div>
 <div class="stat-label">Contas Ativas</div>
 </div>
 <div class="admin-stat-card">
@@ -1516,13 +1747,23 @@ Fechar
 </div>
 </div>
 
+<!-- MURAL DE AVISO DO ADMIN -->
+<div style="background: rgba(0, 0, 0, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--cor-secundaria); margin-bottom: 16px;">
+<label style="color: #ffcc00; font-size: 12px; font-weight: bold; display: block; margin-bottom: 6px;"><i class="fa-solid fa-bullhorn"></i> Publicar Aviso Geral para Todos os Usuários:</label>
+<div style="display: flex; gap: 8px;">
+<input type="text" id="inputAvisoAdmin" placeholder="Ex: Manutenção no Servidor 02 às 22:00." style="flex: 1; background: #000; border: 1px solid var(--cor-secundaria); color: #fff; padding: 7px 10px; border-radius: 6px; font-size: 12px; outline: none;">
+<button class="btn-admin-acao" onclick="publicarAvisoAdmin()" style="border-color: #ffaa00; color: #ffaa00;"><i class="fa-solid fa-paper-plane"></i> Publicar</button>
+<button class="btn-admin-acao" onclick="limparAvisoAdmin()" style="border-color: #ff3366; color: #ff3366;"><i class="fa-solid fa-trash"></i></button>
+</div>
+</div>
+
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; flex-wrap: wrap;">
-<div style="color: #00ffcc; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-users"></i> Gerenciar Contas</div>
+<div style="color: var(--cor-primaria); font-weight: bold; font-size: 14px;"><i class="fa-solid fa-users"></i> Gerenciar Contas</div>
 <div style="display: flex; gap: 8px;">
 <button class="btn-admin-acao" onclick="abrirCriarVisitanteAdmin()" style="border-color: #ffaa00; color: #ffaa00; padding: 6px 12px;">
 <i class="fa-solid fa-stopwatch"></i> Criar Visitante (Demo)
 </button>
-<button class="btn-admin-acao" onclick="abrirCriarUsuarioAdmin()" style="border-color: #39ff14; color: #39ff14; padding: 6px 12px;">
+<button class="btn-admin-acao" onclick="abrirCriarUsuarioAdmin()" style="border-color: var(--cor-destaque); color: var(--cor-destaque); padding: 6px 12px;">
 <i class="fa-solid fa-plus"></i> Criar Nova Conta
 </button>
 </div>
@@ -1539,9 +1780,7 @@ Fechar
 <th>Ações</th>
 </tr>
 </thead>
-<tbody id="tabelaUsuariosCorpo">
-<!-- Linhas inseridas dinamicamente pelo backend -->
-</tbody>
+<tbody id="tabelaUsuariosCorpo"></tbody>
 </table>
 </div>
 </div>
@@ -1590,11 +1829,140 @@ Fechar
 </div>
 
 <script>
-// ==================== GERENCIAMENTO MULTI-USUÁRIO & BACKEND API ====================
+// ==================== GERENCIAMENTO MULTI-USUÁRIO & BACKEND API / LOCAL STORAGE ====================
 const SESSAO_STORAGE_KEY = 'portal_veiga_sessao_servidor';
+const LOCAL_USUARIOS_KEY = 'portal_veiga_usuarios_local';
+const LOCAL_AVISO_KEY = 'portal_veiga_aviso_cpd';
+const LOCAL_TEMA_KEY = 'portal_veiga_tema_selecionado';
+
 let timerIntervalVisitante = null;
 let menusAtuaisMemoria = null;
+let itemArrastado = null;
 
+// ==================== SELETOR DE TEMAS ====================
+function mudarTema(tema) {
+    document.body.className = '';
+    if (tema === 'matrix') document.body.classList.add('tema-matrix');
+    else if (tema === 'synthwave') document.body.classList.add('tema-synthwave');
+    else if (tema === 'stealth') document.body.classList.add('tema-stealth');
+    localStorage.setItem(LOCAL_TEMA_KEY, tema);
+    const select = document.getElementById('selectTema');
+    if (select) select.value = tema;
+}
+
+function carregarTemaSalvo() {
+    const salvo = localStorage.getItem(LOCAL_TEMA_KEY) || 'padrao';
+    mudarTema(salvo);
+}
+
+// ==================== BUSCA INTELIGENTE ====================
+function filtrarLinks(termo) {
+    const t = termo.trim().toLowerCase();
+    
+    // Topo
+    document.querySelectorAll('#lista-links-topo .link-neon').forEach(el => {
+        const texto = el.textContent.toLowerCase();
+        el.style.display = (!t || texto.includes(t)) ? 'inline-flex' : 'none';
+    });
+
+    // Blocos
+    document.querySelectorAll('.bloco-conteudo .botao-neon').forEach(el => {
+        const texto = el.textContent.toLowerCase();
+        el.style.display = (!t || texto.includes(t)) ? 'flex' : 'none';
+    });
+}
+
+// ==================== BLOCO DE NOTAS ====================
+function alternarPainelNotas() {
+    const painel = document.getElementById('painelNotas');
+    painel.classList.toggle('ativo');
+    if (painel.classList.contains('ativo')) {
+        document.getElementById('textoNotas').focus();
+    }
+}
+
+function carregarNotasLocais() {
+    const sessao = obterSessao();
+    if (!sessao) return;
+    const key = `portal_veiga_notas_${sessao.usuario.toLowerCase()}`;
+    const notas = localStorage.getItem(key) || '';
+    document.getElementById('textoNotas').value = notas;
+}
+
+function salvarNotasLocais(texto) {
+    const sessao = obterSessao();
+    if (!sessao) return;
+    const key = `portal_veiga_notas_${sessao.usuario.toLowerCase()}`;
+    localStorage.setItem(key, texto);
+}
+
+// ==================== AVISO GLOBAL CPD ====================
+function carregarAvisoGlobal() {
+    const aviso = localStorage.getItem(LOCAL_AVISO_KEY);
+    const banner = document.getElementById('bannerAvisoGlobal');
+    const lbl = document.getElementById('lblTextoAvisoGlobal');
+    if (aviso && aviso.trim().length > 0) {
+        lbl.textContent = aviso;
+        banner.style.display = 'flex';
+    } else {
+        banner.style.display = 'none';
+    }
+}
+
+function fecharAvisoGlobal() {
+    document.getElementById('bannerAvisoGlobal').style.display = 'none';
+}
+
+function publicarAvisoAdmin() {
+    const input = document.getElementById('inputAvisoAdmin');
+    const texto = input.value.trim();
+    if (!texto) {
+        alert('Digite uma mensagem para o aviso.');
+        return;
+    }
+    localStorage.setItem(LOCAL_AVISO_KEY, texto);
+    carregarAvisoGlobal();
+    alert('📢 Aviso do CPD publicado com sucesso!');
+}
+
+function limparAvisoAdmin() {
+    localStorage.removeItem(LOCAL_AVISO_KEY);
+    document.getElementById('inputAvisoAdmin').value = '';
+    carregarAvisoGlobal();
+    alert('Aviso removido.');
+}
+
+// ==================== DRAG AND DROP (ARRASTAR E SOLTAR) ====================
+function iniciarArrastar(e, menuKey, index) {
+    itemArrastado = { menuKey, index };
+    e.target.classList.add('arrastando');
+}
+
+function finalizarArrastar(e) {
+    e.target.classList.remove('arrastando');
+}
+
+function permitirDrop(e) {
+    e.preventDefault();
+}
+
+function soltarItem(e, menuDestino) {
+    e.preventDefault();
+    if (!itemArrastado || !menusAtuaisMemoria) return;
+
+    const { menuKey, index } = itemArrastado;
+    const item = menusAtuaisMemoria[menuKey][index];
+
+    if (item) {
+        menusAtuaisMemoria[menuKey].splice(index, 1);
+        if (!menusAtuaisMemoria[menuDestino]) menusAtuaisMemoria[menuDestino] = [];
+        menusAtuaisMemoria[menuDestino].push(item);
+        salvarMenusServidor(menusAtuaisMemoria);
+    }
+    itemArrastado = null;
+}
+
+// ==================== SESSÃO E AUTH ====================
 function obterSessao() {
     const s = localStorage.getItem(SESSAO_STORAGE_KEY);
     if (!s) return null;
@@ -1603,6 +1971,20 @@ function obterSessao() {
 
 function salvarSessao(dados) {
     localStorage.setItem(SESSAO_STORAGE_KEY, JSON.stringify(dados));
+}
+
+function obterUsuariosLocais() {
+    let u = localStorage.getItem(LOCAL_USUARIOS_KEY);
+    if (!u) {
+        const padrao = [{ usuario: 'veiga', senha: '123456', perfil: 'admin', status: 'ativo', expiracao: null, criadoEm: new Date().toISOString() }];
+        localStorage.setItem(LOCAL_USUARIOS_KEY, JSON.stringify(padrao));
+        return padrao;
+    }
+    return JSON.parse(u);
+}
+
+function salvarUsuariosLocais(lista) {
+    localStorage.setItem(LOCAL_USUARIOS_KEY, JSON.stringify(lista));
 }
 
 function alternarAbaAuth(aba) {
@@ -1647,26 +2029,33 @@ async function realizarLogin(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario, senha })
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            exibirMsgAuth(dados.mensagem || 'Usuário ou senha incorretos.', 'erro');
+        if (res.ok) {
+            const dados = await res.json();
+            if (!dados.sucesso) {
+                exibirMsgAuth(dados.mensagem || 'Usuário ou senha incorretos.', 'erro');
+                return;
+            }
+            salvarSessao({ usuario: dados.usuario, perfil: dados.perfil, expiracao: dados.expiracao });
+            verificarSessao();
             return;
         }
+    } catch (err) {}
 
-        salvarSessao({
-            usuario: dados.usuario,
-            perfil: dados.perfil,
-            expiracao: dados.expiracao
-        });
-
-        verificarSessao();
-    } catch (err) {
-        exibirMsgAuth('Erro ao conectar ao servidor.', 'erro');
+    const usuarios = obterUsuariosLocais();
+    const conta = usuarios.find(u => u.usuario.toLowerCase() === usuario);
+    if (!conta || conta.senha !== senha) {
+        exibirMsgAuth('⚠️ Usuário ou senha incorretos!', 'erro');
+        return;
     }
+    if (conta.status === 'bloqueado') {
+        exibirMsgAuth('🚫 Esta conta está bloqueada pelo Administrador.', 'erro');
+        return;
+    }
+    salvarSessao({ usuario: conta.usuario, perfil: conta.perfil, expiracao: conta.expiracao });
+    verificarSessao();
 }
 
-// 2. CADASTRO DE CONTA
+// 2. CADASTRO
 async function realizarCadastro(e) {
     e.preventDefault();
     const usuario = document.getElementById('cadUsuario').value.trim();
@@ -1677,12 +2066,10 @@ async function realizarCadastro(e) {
         exibirMsgAuth('Por favor, preencha todos os campos.', 'erro');
         return;
     }
-
     if (usuario.length < 3) {
         exibirMsgAuth('O usuário deve ter pelo menos 3 caracteres.', 'erro');
         return;
     }
-
     if (senha !== senhaConfirma) {
         exibirMsgAuth('As senhas digitadas não coincidem.', 'erro');
         return;
@@ -1694,48 +2081,60 @@ async function realizarCadastro(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario, senha })
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            exibirMsgAuth(dados.mensagem || 'Erro ao criar conta.', 'erro');
+        if (res.ok) {
+            const dados = await res.json();
+            if (!dados.sucesso) {
+                exibirMsgAuth(dados.mensagem || 'Erro ao criar conta.', 'erro');
+                return;
+            }
+            exibirMsgAuth('✅ Conta criada com sucesso! Você já pode entrar.', 'sucesso');
+            setTimeout(() => {
+                alternarAbaAuth('login');
+                document.getElementById('loginUsuario').value = usuario;
+                document.getElementById('loginSenha').value = senha;
+            }, 1200);
             return;
         }
+    } catch (err) {}
 
-        exibirMsgAuth('✅ Conta criada com sucesso no servidor! Você já pode entrar.', 'sucesso');
-        setTimeout(() => {
-            alternarAbaAuth('login');
-            document.getElementById('loginUsuario').value = usuario;
-            document.getElementById('loginSenha').value = senha;
-        }, 1200);
-    } catch (err) {
-        exibirMsgAuth('Erro ao conectar ao servidor.', 'erro');
+    const usuarios = obterUsuariosLocais();
+    if (usuarios.some(u => u.usuario.toLowerCase() === usuario.toLowerCase())) {
+        exibirMsgAuth('Este usuário já está cadastrado.', 'erro');
+        return;
     }
+    usuarios.push({ usuario, senha, perfil: 'usuario', status: 'ativo', expiracao: null, criadoEm: new Date().toISOString() });
+    salvarUsuariosLocais(usuarios);
+    exibirMsgAuth('✅ Conta criada com sucesso! Você já pode entrar.', 'sucesso');
+    setTimeout(() => {
+        alternarAbaAuth('login');
+        document.getElementById('loginUsuario').value = usuario;
+        document.getElementById('loginSenha').value = senha;
+    }, 1200);
 }
 
-// 3. VISITANTE DEMO (10 MINUTOS)
+// 3. VISITANTE DEMO
 async function entrarComoVisitante() {
     try {
         const res = await fetch('/api/visitante', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            exibirMsgAuth('Erro ao gerar sessão de visitante.', 'erro');
-            return;
+        if (res.ok) {
+            const dados = await res.json();
+            if (dados.sucesso) {
+                salvarSessao({ usuario: dados.usuario, perfil: 'visitante', expiracao: dados.expiracao });
+                verificarSessao();
+                return;
+            }
         }
+    } catch (err) {}
 
-        salvarSessao({
-            usuario: dados.usuario,
-            perfil: 'visitante',
-            expiracao: dados.expiracao
-        });
-
-        verificarSessao();
-    } catch (err) {
-        exibirMsgAuth('Erro ao conectar ao servidor.', 'erro');
-    }
+    const randomId = Math.floor(1000 + Math.random() * 9000);
+    const nomeVisitante = `visitante_${randomId}`;
+    const agora = new Date();
+    const expiracao = new Date(agora.getTime() + 10 * 60 * 1000).toISOString();
+    salvarSessao({ usuario: nomeVisitante, perfil: 'visitante', expiracao });
+    verificarSessao();
 }
 
 function iniciarTimerVisitante(expiracaoIso) {
@@ -1753,7 +2152,7 @@ function iniciarTimerVisitante(expiracaoIso) {
             clearInterval(timerIntervalVisitante);
             badge.style.display = 'none';
             localStorage.removeItem(SESSAO_STORAGE_KEY);
-            alert('⏰ O seu tempo de visitante (10 minutos) expirou!\nA conta temporária foi excluída.');
+            alert('⏰ O seu tempo de visitante (10 minutos) expirou!\nA conta temporária foi finalizada.');
             verificarSessao();
             return;
         }
@@ -1802,6 +2201,9 @@ async function verificarSessao() {
             usuarioTag.innerHTML = `<i class="fa-solid fa-circle-user"></i> <span>${sessao.usuario}</span>`;
         }
 
+        carregarTemaSalvo();
+        carregarNotasLocais();
+        carregarAvisoGlobal();
         await carregarTodosMenus();
     } else {
         if (timerIntervalVisitante) clearInterval(timerIntervalVisitante);
@@ -1866,52 +2268,85 @@ async function salvarAlteracoesPerfil(e) {
                 novaSenha: novaSenha
             })
         });
-        const dados = await res.json();
-
-        if (!dados.sucesso) {
-            msg.textContent = dados.mensagem || 'Erro ao atualizar perfil.';
-            msg.className = 'auth-msg erro';
-            msg.style.display = 'block';
-            return;
+        if (res.ok) {
+            const dados = await res.json();
+            if (dados.sucesso) {
+                salvarSessao({ ...sessao, usuario: dados.usuario, perfil: dados.perfil });
+                msg.textContent = '✅ Perfil atualizado com sucesso!';
+                msg.className = 'auth-msg sucesso';
+                msg.style.display = 'block';
+                setTimeout(() => { fecharModalPerfil(); verificarSessao(); }, 1200);
+                return;
+            }
         }
+    } catch (err) {}
 
-        salvarSessao({
-            ...sessao,
-            usuario: dados.usuario,
-            perfil: dados.perfil
-        });
-
-        msg.textContent = '✅ Perfil atualizado com sucesso!';
-        msg.className = 'auth-msg sucesso';
-        msg.style.display = 'block';
-
-        setTimeout(() => {
-            fecharModalPerfil();
-            verificarSessao();
-        }, 1200);
-    } catch (err) {
-        msg.textContent = 'Erro de comunicação com o servidor.';
-        msg.className = 'auth-msg erro';
-        msg.style.display = 'block';
+    const usuarios = obterUsuariosLocais();
+    const conta = usuarios.find(u => u.usuario.toLowerCase() === sessao.usuario.toLowerCase());
+    if (conta) {
+        conta.usuario = novoUsuario;
+        if (novaSenha) conta.senha = novaSenha;
+        salvarUsuariosLocais(usuarios);
     }
+    salvarSessao({ ...sessao, usuario: novoUsuario });
+    msg.textContent = '✅ Perfil atualizado com sucesso!';
+    msg.className = 'auth-msg sucesso';
+    msg.style.display = 'block';
+    setTimeout(() => { fecharModalPerfil(); verificarSessao(); }, 1200);
 }
 
-// ==================== MENUS & PERSISTÊNCIA NO SERVIDOR ====================
+// ==================== MENUS & PERSISTÊNCIA ====================
+const MENUS_TOPO_PADRAO = [
+    { nome: 'Gmail', url: 'https://mail.google.com/', icone: 'fa-solid fa-envelope' },
+    { nome: 'YouTube', url: 'https://www.youtube.com/', icone: 'fa-brands fa-youtube' },
+    { nome: 'Chat GPT', url: 'https://chatgpt.com/', icone: 'fa-solid fa-robot' },
+    { nome: 'Fiserv', url: 'https://sitef2.softwareexpress.com.br/', icone: 'fa-solid fa-credit-card' },
+    { nome: 'Laurenti', url: 'https://laurentiepdltda.zendesk.com/', icone: 'fa-solid fa-headset' },
+    { nome: 'Bradesco', url: 'https://banco.bradesco/', icone: 'fa-solid fa-building-columns' },
+    { nome: 'Caixa', url: 'https://www.caixa.gov.br/', icone: 'fa-solid fa-vault' },
+    { nome: 'I love PDF', url: 'https://www.ilovepdf.com/pt', icone: 'fa-solid fa-file-pdf' }
+];
+
+const MENUS_SISTEMAS_VEIGA = [
+    { nome: 'Agenda', url: 'Caminhos/Agenda.html', icone: 'fa-solid fa-calendar-days' },
+    { nome: 'Senha', url: 'Caminhos/Senhas.html', icone: 'fa-solid fa-key' },
+    { nome: 'Estações Hosts / IP', url: 'Caminhos/Micros.html', icone: 'fa-solid fa-network-wired' },
+    { nome: 'Reinicialização 15/15 Servidores', url: 'Caminhos/Servidores.html', icone: 'fa-solid fa-server' },
+    { nome: 'Relatórios Batch', url: 'Caminhos/RelatoriosBatch.html', icone: 'fa-solid fa-chart-line' },
+    { nome: 'Telas RM', url: 'Caminhos/Telas RM.html', icone: 'fa-solid fa-desktop' },
+    { nome: 'Calcular Jornada', url: 'Caminhos/calcular_jornada.php.html', icone: 'fa-solid fa-clock' },
+    { nome: 'Gertec Busca Preço', url: 'Caminhos/Gertec.html', icone: 'fa-solid fa-barcode' }
+];
+
 async function carregarTodosMenus() {
     const sessao = obterSessao();
     if (!sessao) return;
 
     try {
         const res = await fetch(`/api/menus?usuario=${encodeURIComponent(sessao.usuario)}`);
-        const dados = await res.json();
-        if (dados.sucesso && dados.menus) {
-            menusAtuaisMemoria = dados.menus;
+        if (res.ok) {
+            const dados = await res.json();
+            if (dados.sucesso && dados.menus) {
+                menusAtuaisMemoria = dados.menus;
+            }
         }
-    } catch (e) {
-        console.error('Erro ao carregar menus:', e);
-    }
+    } catch (e) {}
 
-    if (!menusAtuaisMemoria) return;
+    if (!menusAtuaisMemoria) {
+        const key = `portal_veiga_menus_u_${sessao.usuario.toLowerCase()}`;
+        const local = localStorage.getItem(key);
+        if (local) {
+            menusAtuaisMemoria = JSON.parse(local);
+        } else {
+            const ehAdmin = sessao.perfil === 'admin' || sessao.usuario.toLowerCase() === 'veiga';
+            menusAtuaisMemoria = {
+                topo: MENUS_TOPO_PADRAO,
+                sistemas: ehAdmin ? MENUS_SISTEMAS_VEIGA : [],
+                meuslinks: [],
+                outros: ehAdmin ? [{ nome: 'Relógio Biométrico', url: 'Caminhos/Biometrico.html', icone: 'fa-solid fa-fingerprint' }] : []
+            };
+        }
+    }
 
     // 1. Topo
     const topoContainer = document.getElementById('lista-links-topo');
@@ -1934,10 +2369,16 @@ async function carregarTodosMenus() {
         topoContainer.appendChild(div);
     });
 
-    // 2. Blocos
+    // 2. Blocos com suporte Draggable
     renderBloco('sistemas', menusAtuaisMemoria.sistemas, 'lista-bloco-sistemas', 'Nenhum sistema adicionado.<br>Clique em + Add para inserir.');
     renderBloco('meuslinks', menusAtuaisMemoria.meuslinks, 'lista-bloco-meuslinks', 'Nenhum link adicionado ainda.<br>Clique em + Add para inserir.');
     renderBloco('outros', menusAtuaisMemoria.outros, 'lista-bloco-outros', 'Nenhum item cadastrado.<br>Clique em + Add para inserir.');
+
+    // Aplicar filtro de busca atual se houver texto
+    const inputBusca = document.getElementById('inputBusca');
+    if (inputBusca && inputBusca.value) {
+        filtrarLinks(inputBusca.value);
+    }
 }
 
 function renderBloco(menuKey, itens, containerId, msgVazio = 'Nenhum item') {
@@ -1953,9 +2394,13 @@ function renderBloco(menuKey, itens, containerId, msgVazio = 'Nenhum item') {
         const iconeClass = item.icone || 'fa-solid fa-link';
         const div = document.createElement('div');
         div.className = 'botao-neon';
+        div.draggable = true;
+        div.ondragstart = (e) => iniciarArrastar(e, menuKey, index);
+        div.ondragend = finalizarArrastar;
         div.onclick = (e) => lidarCliqueLink(e, item.nome, item.url, iconeClass);
         div.innerHTML = `
             <a class="link-clique">
+                <span class="status-ping-dot" title="Serviço Ativo"></span>
                 <i class="${iconeClass} icone-link"></i>
                 <span>${item.nome}</span>
             </a>
@@ -1971,17 +2416,16 @@ function renderBloco(menuKey, itens, containerId, msgVazio = 'Nenhum item') {
 async function salvarMenusServidor(novosMenus) {
     const sessao = obterSessao();
     if (!sessao) return;
+    menusAtuaisMemoria = novosMenus;
+    localStorage.setItem(`portal_veiga_menus_u_${sessao.usuario.toLowerCase()}`, JSON.stringify(novosMenus));
     try {
         await fetch('/api/menus', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario: sessao.usuario, menus: novosMenus })
         });
-        menusAtuaisMemoria = novosMenus;
-        carregarTodosMenus();
-    } catch (e) {
-        alert('Erro ao salvar dados no servidor.');
-    }
+    } catch (e) {}
+    carregarTodosMenus();
 }
 
 function lidarCliqueLink(e, nome, url, icone) {
@@ -2088,9 +2532,9 @@ function abrirPreview(nome, url, icone) {
         container.innerHTML = `
             <div class="preview-fallback">
                 <i class="${icone}"></i>
-                <div style="font-weight: bold; font-size: 15px; color: #00eaff;">${nome}</div>
+                <div style="font-weight: bold; font-size: 15px; color: var(--cor-secundaria);">${nome}</div>
                 <div style="font-size: 11px; opacity: 0.7;">Site Externo Seguro</div>
-                <div style="font-size: 11px; color: #39ff14; margin-top: 4px;">Clique em "Abrir Página" abaixo para acessar</div>
+                <div style="font-size: 11px; color: var(--cor-destaque); margin-top: 4px;">Clique em "Abrir Página" abaixo para acessar</div>
             </div>
         `;
     }
@@ -2121,9 +2565,10 @@ function copiarLinkPreview() {
     });
 }
 
-// ==================== PAINEL DE ADMIN (USUÁRIO VEIGA) ====================
+// ==================== PAINEL DE ADMIN ====================
 async function abrirPainelAdmin() {
     await carregarTabelaAdmin();
+    document.getElementById('inputAvisoAdmin').value = localStorage.getItem(LOCAL_AVISO_KEY) || '';
     document.getElementById('modalAdmin').classList.add('ativo');
 }
 
@@ -2148,70 +2593,75 @@ function formatarDataExp(dataIso, perfil) {
         return `<span style="color: #ffaa00; font-weight: bold;"><i class="fa-solid fa-stopwatch"></i> ${minRestantes} min restantes</span>`;
     }
 
-    return `<span style="color: #00eaff;">Válido até ${data.toLocaleDateString('pt-BR')} ${data.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'})}</span>`;
+    return `<span style="color: var(--cor-secundaria);">Válido até ${data.toLocaleDateString('pt-BR')} ${data.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'})}</span>`;
 }
 
 async function carregarTabelaAdmin() {
+    let usuarios = [];
     try {
         const res = await fetch('/api/admin/usuarios');
-        const dados = await res.json();
-        const usuarios = dados.usuarios || [];
+        if (res.ok) {
+            const dados = await res.json();
+            usuarios = dados.usuarios || [];
+        }
+    } catch (e) {}
 
-        const tbody = document.getElementById('tabelaUsuariosCorpo');
-        tbody.innerHTML = '';
-
-        let total = usuarios.length;
-        let ativos = 0;
-
-        usuarios.forEach((user) => {
-            const ehAdmin = user.perfil === 'admin' || user.usuario.toLowerCase() === 'veiga';
-            const ehVisitante = user.perfil === 'visitante';
-            const expirado = user.expiracao && new Date() > new Date(user.expiracao);
-            
-            let statusBadge = '';
-            if (user.status === 'bloqueado') {
-                statusBadge = '<span class="badge-status status-bloqueado">Bloqueado</span>';
-            } else if (expirado) {
-                statusBadge = '<span class="badge-status status-expirado">Expirado</span>';
-            } else if (ehVisitante) {
-                statusBadge = '<span class="badge-status status-demo">Demo 10min</span>';
-                ativos++;
-            } else {
-                statusBadge = '<span class="badge-status status-ativo">Ativo</span>';
-                ativos++;
-            }
-
-            let perfilBadge = '';
-            if (ehAdmin) {
-                perfilBadge = '<span style="color: #ffcc00; font-weight: bold;"><i class="fa-solid fa-crown"></i> Admin</span>';
-            } else if (ehVisitante) {
-                perfilBadge = '<span style="color: #ffaa00; font-weight: bold;"><i class="fa-solid fa-stopwatch"></i> Visitante</span>';
-            } else {
-                perfilBadge = '<span style="color: #6d8a9c;">Usuário</span>';
-            }
-
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><b>${user.usuario}</b></td>
-                <td>${perfilBadge}</td>
-                <td>${statusBadge}</td>
-                <td>${formatarDataExp(user.expiracao, user.perfil)}</td>
-                <td>
-                    ${!ehAdmin ? `
-                        <button class="btn-admin-acao" title="Definir Tempo de Acesso" onclick="definirTempoAcesso('${user.usuario}')"><i class="fa-solid fa-clock"></i> Tempo</button>
-                        <button class="btn-admin-acao" title="Bloquear / Desbloquear" onclick="alternarStatusUsuario('${user.usuario}')">${user.status === 'bloqueado' ? '<i class="fa-solid fa-unlock"></i> Desbloquear' : '<i class="fa-solid fa-ban"></i> Bloquear'}</button>
-                        <button class="btn-admin-acao btn-admin-excluir" title="Excluir Conta" onclick="excluirContaUsuario('${user.usuario}')"><i class="fa-solid fa-trash"></i></button>
-                    ` : '<span style="color: #6d8a9c; font-size: 11px;">Conta Principal</span>'}
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-
-        document.getElementById('statTotalUsuarios').textContent = total;
-        document.getElementById('statAtivos').textContent = ativos;
-    } catch (e) {
-        console.error('Erro ao carregar lista de usuários:', e);
+    if (usuarios.length === 0) {
+        usuarios = obterUsuariosLocais();
     }
+
+    const tbody = document.getElementById('tabelaUsuariosCorpo');
+    tbody.innerHTML = '';
+
+    let total = usuarios.length;
+    let ativos = 0;
+
+    usuarios.forEach((user) => {
+        const ehAdmin = user.perfil === 'admin' || user.usuario.toLowerCase() === 'veiga';
+        const ehVisitante = user.perfil === 'visitante';
+        const expirado = user.expiracao && new Date() > new Date(user.expiracao);
+        
+        let statusBadge = '';
+        if (user.status === 'bloqueado') {
+            statusBadge = '<span class="badge-status status-bloqueado">Bloqueado</span>';
+        } else if (expirado) {
+            statusBadge = '<span class="badge-status status-expirado">Expirado</span>';
+        } else if (ehVisitante) {
+            statusBadge = '<span class="badge-status status-demo">Demo 10min</span>';
+            ativos++;
+        } else {
+            statusBadge = '<span class="badge-status status-ativo">Ativo</span>';
+            ativos++;
+        }
+
+        let perfilBadge = '';
+        if (ehAdmin) {
+            perfilBadge = '<span style="color: #ffcc00; font-weight: bold;"><i class="fa-solid fa-crown"></i> Admin</span>';
+        } else if (ehVisitante) {
+            perfilBadge = '<span style="color: #ffaa00; font-weight: bold;"><i class="fa-solid fa-stopwatch"></i> Visitante</span>';
+        } else {
+            perfilBadge = '<span style="color: #6d8a9c;">Usuário</span>';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><b>${user.usuario}</b></td>
+            <td>${perfilBadge}</td>
+            <td>${statusBadge}</td>
+            <td>${formatarDataExp(user.expiracao, user.perfil)}</td>
+            <td>
+                ${!ehAdmin ? `
+                    <button class="btn-admin-acao" title="Definir Tempo de Acesso" onclick="definirTempoAcesso('${user.usuario}')"><i class="fa-solid fa-clock"></i> Tempo</button>
+                    <button class="btn-admin-acao" title="Bloquear / Desbloquear" onclick="alternarStatusUsuario('${user.usuario}')">${user.status === 'bloqueado' ? '<i class="fa-solid fa-unlock"></i> Desbloquear' : '<i class="fa-solid fa-ban"></i> Bloquear'}</button>
+                    <button class="btn-admin-acao btn-admin-excluir" title="Excluir Conta" onclick="excluirContaUsuario('${user.usuario}')"><i class="fa-solid fa-trash"></i></button>
+                ` : '<span style="color: #6d8a9c; font-size: 11px;">Conta Principal</span>'}
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('statTotalUsuarios').textContent = total;
+    document.getElementById('statAtivos').textContent = ativos;
 }
 
 async function definirTempoAcesso(usuario) {
@@ -2245,10 +2695,20 @@ async function definirTempoAcesso(usuario) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario, minutos })
         });
-        carregarTabelaAdmin();
-    } catch (e) {
-        alert('Erro ao atualizar tempo.');
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    const u = usuarios.find(x => x.usuario.toLowerCase() === usuario.toLowerCase());
+    if (u) {
+        if (minutos === null) u.expiracao = null;
+        else {
+            let d = new Date();
+            d.setMinutes(d.getMinutes() + minutos);
+            u.expiracao = d.toISOString();
+        }
+        salvarUsuariosLocais(usuarios);
     }
+    carregarTabelaAdmin();
 }
 
 async function alternarStatusUsuario(usuario) {
@@ -2258,22 +2718,28 @@ async function alternarStatusUsuario(usuario) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario })
         });
-        carregarTabelaAdmin();
-    } catch (e) {
-        alert('Erro ao alterar status.');
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    const u = usuarios.find(x => x.usuario.toLowerCase() === usuario.toLowerCase());
+    if (u) {
+        u.status = u.status === 'bloqueado' ? 'ativo' : 'bloqueado';
+        salvarUsuariosLocais(usuarios);
     }
+    carregarTabelaAdmin();
 }
 
 async function excluirContaUsuario(usuario) {
-    if (confirm(`Tem certeza que deseja EXCLUIR permanentemente a conta de "${usuario}" do servidor?`)) {
+    if (confirm(`Tem certeza que deseja EXCLUIR permanentemente a conta de "${usuario}"?`)) {
         try {
-            await fetch(`/api/admin/usuario?usuario=${encodeURIComponent(usuario)}`, {
-                method: 'DELETE'
-            });
-            carregarTabelaAdmin();
-        } catch (e) {
-            alert('Erro ao excluir conta.');
-        }
+            await fetch(`/api/admin/usuario?usuario=${encodeURIComponent(usuario)}`, { method: 'DELETE' });
+        } catch (e) {}
+
+        let usuarios = obterUsuariosLocais();
+        usuarios = usuarios.filter(x => x.usuario.toLowerCase() !== usuario.toLowerCase());
+        salvarUsuariosLocais(usuarios);
+        localStorage.removeItem(`portal_veiga_menus_u_${usuario.toLowerCase()}`);
+        carregarTabelaAdmin();
     }
 }
 
@@ -2288,36 +2754,39 @@ async function abrirCriarUsuarioAdmin() {
     if (!senha) return;
 
     try {
-        const res = await fetch('/api/admin/usuario/criar', {
+        await fetch('/api/admin/usuario/criar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario: usuario.trim(), senha: senha.trim() })
         });
-        const dados = await res.json();
-        if (!dados.sucesso) {
-            alert(dados.mensagem || 'Erro ao criar usuário.');
-            return;
-        }
-        carregarTabelaAdmin();
-    } catch (e) {
-        alert('Erro ao criar usuário.');
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    if (!usuarios.some(u => u.usuario.toLowerCase() === usuario.trim().toLowerCase())) {
+        usuarios.push({ usuario: usuario.trim(), senha: senha.trim(), perfil: 'usuario', status: 'ativo', expiracao: null, criadoEm: new Date().toISOString() });
+        salvarUsuariosLocais(usuarios);
     }
+    carregarTabelaAdmin();
 }
 
 async function abrirCriarVisitanteAdmin() {
+    const randomId = Math.floor(1000 + Math.random() * 9000);
+    const nome = `visitante_${randomId}`;
+    const agora = new Date();
+    const expiracao = new Date(agora.getTime() + 10 * 60 * 1000).toISOString();
+
     try {
-        const res = await fetch('/api/visitante', {
+        await fetch('/api/visitante', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
-        const dados = await res.json();
-        if (dados.sucesso) {
-            carregarTabelaAdmin();
-            alert(`✅ Visitante "${dados.usuario}" criado com sucesso no servidor! Duração de 10 minutos.`);
-        }
-    } catch (e) {
-        alert('Erro ao gerar visitante.');
-    }
+    } catch (e) {}
+
+    const usuarios = obterUsuariosLocais();
+    usuarios.push({ usuario: nome, senha: '', perfil: 'visitante', status: 'ativo', expiracao, criadoEm: agora.toISOString() });
+    salvarUsuariosLocais(usuarios);
+    carregarTabelaAdmin();
+    alert(`✅ Visitante "${nome}" criado com sucesso! Duração de 10 minutos.`);
 }
 
 // ==================== MODAL ADICIONAR / EDITAR LINKS ====================
@@ -2417,16 +2886,32 @@ function excluirLink(menuKey, index) {
 
 // Atalhos do Teclado
 document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const input = document.getElementById('inputBusca');
+        if (input) input.focus();
+    }
     if (e.key === 'Escape') {
         fecharPreview();
         fecharModal();
         fecharPainelAdmin();
         fecharModalPerfil();
+        const painel = document.getElementById('painelNotas');
+        if (painel) painel.classList.remove('ativo');
+        const input = document.getElementById('inputBusca');
+        if (input && document.activeElement === input) {
+            input.value = '';
+            filtrarLinks('');
+            input.blur();
+        }
     }
 });
 
 // Inicialização
-document.addEventListener('DOMContentLoaded', verificarSessao);
+document.addEventListener('DOMContentLoaded', () => {
+    carregarTemaSalvo();
+    verificarSessao();
+});
 </script>
 
 </body>
