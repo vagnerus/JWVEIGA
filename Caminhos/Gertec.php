@@ -1,0 +1,45 @@
+﻿<HTML>
+
+<head></head>
+
+<title>..:: Gertec Busca Preço ::..</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="\cpd\IMG\cpd2.png"">
+
+<style="width: 78px; height: 35px;" alt=" src="\cpd\IMG\cpd2.png" align="middle"></legend></style>
+
+<body background="\cpd\IMG\capa.jpg" text="ACFCFB" width=100%>
+
+</tr>
+
+<tr >
+
+<td></td>
+<td align="center" width="15%">
+<fieldset><legend><img style="width: 78px; height: 35px;" alt="" src="\cpd\IMG\cpd2.png" align="middle">&nbsp;Filial 663 - Campinas&nbsp;</legend>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+
+<tbody> 
+
+<table align="center" bgcolor="0F3255" border="1"  cellspacing="4" cellpadding="4" >
+<th bgcolor="040D16">Localização<th bgcolor="040D16">IP Servidor<th bgcolor="040D16">IP Cliente<th bgcolor="040D16">Mascara De Rede<th bgcolor="040D16">Gatway</th>
+<tr><td align="center">Corredor 1 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.228</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 1 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.227</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 2 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.229</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 4 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.230</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 6 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.131</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 8 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.232</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 10 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.233</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 12 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.246</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 14 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.235</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 16 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.236</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 18 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.237</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 21 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.238</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 23 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.239</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 26 A<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.234</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Corredor 26 B<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.243</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+<tr><td align="center">Frios<td<tr><td align="center">10.124.45.1<td align="center"center">10.124.44.247</td><td align="center""center">255.255.255.0</td><td align="center">10.124.44.254</td>
+
+</body>
+
+</HTML>

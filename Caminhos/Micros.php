@@ -1,0 +1,51 @@
+﻿<HTML>
+
+<head></head>
+
+<title>..:: Hosts&IP::..</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="\cpd\IMG\cpd2.png"">
+
+<style="width: 78px; height: 35px;" alt="" src="\cpd\IMG\cpd2.png" align="middle"></legend></style>
+
+<body background="\cpd\IMG\capa.jpg" text="ACFCFB" width=100%>
+
+</tr>
+
+<tr >
+
+<td></td>
+<td align="center" width="15%">
+<fieldset><legend><img style="width: 78px; height: 35px;" alt="" src="\cpd\IMG\cpd2.png" align="middle">&nbsp;Filial 663 - Campinas&nbsp;</legend>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+
+<tbody> 
+
+<table align="center" bgcolor="0F3255" border="4"  cellspacing="1" cellpadding="4">
+<tr><td bgcolor="040D16" align="center"><font color="ACFCFB">Estação</font></td><td bgcolor="040D16" align="center"><font color="ACFCFB">Hosts</font></td><td bgcolor="040D16" align="center"><font color="ACFCFB">IP</font></td></tr>
+<tr><td style="text-align: center;">CPD001</td><td style="text-align: center;">w663cpd001<td>10.124.44.63</td></tr>
+<tr><td style="text-align: center;">CPD002</td><td style="text-align: center;">w663cpd002<td>10.124.44.64</td></tr>
+<tr><td style="text-align: center;">Cartazista</td><td style="text-align: center;">w663car001<td>10.124.44.66</td></tr>
+<tr><td style="text-align: center;">Estoquista</td><td style="text-align: center;">w663est001<td>10.124.44.67</td></tr>
+<tr><td style="text-align: center;">Gerente Comercial</td><td style="text-align: center;">w663ger001<td>10.124.44.68</td></tr>
+<tr><td style="text-align: center;">Supervisor ADM</td><td style="text-align: center;">w663ger002<td>10.124.44.69</td></tr>
+<tr><td style="text-align: center;">Almoxerifado</td><td style="text-align: center;">w663alm001<td>10.124.44.71</td></tr>
+<tr><td style="text-align: center;">Recepção</td><td style="text-align: center;">w663ppe001<td>10.124.44.72</td></tr>
+<tr><td style="text-align: center;">Auxiliar RH</td><td style="text-align: center;">w663rhu001<td>10.124.44.73</td></tr>
+<tr><td style="text-align: center;">Analista RH</td><td style="text-align: center;">w663rhu002<td>10.124.44.74</td></tr>
+<tr><td style="text-align: center;">Sala De Treinamento</td><td style="text-align: center;">w663tre001<td>10.124.44.75</td></tr>
+<tr><td style="text-align: center;">Contabilidade</td><td style="text-align: center;">w663con001<td>10.124.44.76</td></tr>
+<tr><td style="text-align: center;">Refeitório</td><td style="text-align: center;">w663ref001<td>10.124.44.77</td></tr>
+<tr><td style="text-align: center;">Cadastro</td><td style="text-align: center;">w663cad001<td>10.124.44.78</td></tr>
+<tr><td style="text-align: center;">Frente de Caixa</td><td style="text-align: center;">w663fca001<td>10.124.44.79</td></tr>
+<tr><td style="text-align: center;">RM</td><td style="text-align: center;">w663rme001<td>10.124.44.80</td></tr>
+<tr><td style="text-align: center;">Supervisor OPE</td><td style="text-align: center;">w663ger003<td>10.124.44.81</td></tr>
+<tr><td style="text-align: center;">Ecommerce</td><td style="text-align: center;">w663ifd001<td>10.124.44.82</td></tr>
+<tr><td style="text-align: center;">NFE Remoto</td><td style="text-align: center;">w663nfe002<td>10.124.44.183</td></tr>
+<tr><td style="text-align: center;">Balança Remoto</td><td style="text-align: center;">w663bal002<td>10.124.44.184</td></tr>
+
+</table>
+
+</body>
+
+</HTML>

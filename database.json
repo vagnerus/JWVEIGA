@@ -1,0 +1,108 @@
+{
+  "usuarios": [
+    {
+      "usuario": "veiga",
+      "senha": "123456",
+      "perfil": "admin",
+      "status": "ativo",
+      "expiracao": null,
+      "criadoEm": "2026-08-28T17:15:41.333059"
+    }
+  ],
+  "menus": {
+    "veiga": {
+      "topo": [
+        {
+          "nome": "Gmail",
+          "url": "https://mail.google.com/",
+          "icone": "fa-solid fa-envelope"
+        },
+        {
+          "nome": "YouTube",
+          "url": "https://www.youtube.com/",
+          "icone": "fa-brands fa-youtube"
+        },
+        {
+          "nome": "Chat GPT",
+          "url": "https://chatgpt.com/",
+          "icone": "fa-solid fa-robot"
+        },
+        {
+          "nome": "Fiserv",
+          "url": "https://sitef2.softwareexpress.com.br/",
+          "icone": "fa-solid fa-credit-card"
+        },
+        {
+          "nome": "Laurenti",
+          "url": "https://laurentiepdltda.zendesk.com/",
+          "icone": "fa-solid fa-headset"
+        },
+        {
+          "nome": "Bradesco",
+          "url": "https://banco.bradesco/",
+          "icone": "fa-solid fa-building-columns"
+        },
+        {
+          "nome": "Caixa",
+          "url": "https://www.caixa.gov.br/",
+          "icone": "fa-solid fa-vault"
+        },
+        {
+          "nome": "I love PDF",
+          "url": "https://www.ilovepdf.com/pt",
+          "icone": "fa-solid fa-file-pdf"
+        }
+      ],
+      "sistemas": [
+        {
+          "nome": "Agenda",
+          "url": "Caminhos/Agenda.html",
+          "icone": "fa-solid fa-calendar-days"
+        },
+        {
+          "nome": "Senha",
+          "url": "Caminhos/Senhas.html",
+          "icone": "fa-solid fa-key"
+        },
+        {
+          "nome": "Estações Hosts / IP",
+          "url": "Caminhos/Micros.html",
+          "icone": "fa-solid fa-network-wired"
+        },
+        {
+          "nome": "Reinicialização 15/15 Servidores",
+          "url": "Caminhos/Servidores.html",
+          "icone": "fa-solid fa-server"
+        },
+        {
+          "nome": "Relatórios Batch",
+          "url": "Caminhos/RelatoriosBatch.html",
+          "icone": "fa-solid fa-chart-line"
+        },
+        {
+          "nome": "Telas RM",
+          "url": "Caminhos/Telas RM.html",
+          "icone": "fa-solid fa-desktop"
+        },
+        {
+          "nome": "Calcular Jornada",
+          "url": "Caminhos/calcular_jornada.php.html",
+          "icone": "fa-solid fa-clock"
+        },
+        {
+          "nome": "Gertec Busca Preço",
+          "url": "Caminhos/Gertec.html",
+          "icone": "fa-solid fa-barcode"
+        }
+      ],
+      "meuslinks": [],
+      "outros": [
+        {
+          "nome": "Relógio Biométrico",
+          "url": "Caminhos/Biometrico.html",
+          "icone": "fa-solid fa-fingerprint"
+        }
+      ]
+    }
+  }
+}

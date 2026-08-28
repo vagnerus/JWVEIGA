@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Solicitação de Chave de Desbloqueio</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000; /* ALTERADO PARA PRETO */
+    padding: 40px;
+}
+
+.container {
+    background-color: #ffffff;
+    max-width: 650px;
+    margin: auto;
+    padding: 30px;
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.linha {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin-top: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.input-invalido {
+    border: 2px solid #d00000 !important;
+    background-color: #ffe6e6;
+}
+
+.opcao {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.caixa {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.selecionado {
+    background-color: #000;
+    color: #fff;
+}
+
+.alerta {
+    margin-top: 10px;
+    color: #d00000;
+    font-weight: bold;
+    display: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 25px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+</style>
+
+<script>
+
+let reiniciado = null;
+
+function selecionar(opcao) {
+
+    reiniciado = opcao;
+
+    document.getElementById("sim").innerHTML = "";
+    document.getElementById("nao").innerHTML = "";
+
+    document.getElementById("sim").classList.remove("selecionado");
+    document.getElementById("nao").classList.remove("selecionado");
+
+    document.getElementById(opcao).innerHTML = "X";
+    document.getElementById(opcao).classList.add("selecionado");
+
+    validarFormulario();
+}
+
+function validarFormulario() {
+
+    let alertaReinicio = document.getElementById("mensagemAlerta");
+    let alertaCodigo = document.getElementById("mensagemCodigo");
+    let botao = document.getElementById("btnEnviar");
+    let campoCodigo = document.getElementById("codigoBloqueio");
+    let codigo = campoCodigo.value.trim();
+
+    if (codigo === "") {
+        alertaCodigo.style.display = "block";
+        campoCodigo.classList.add("input-invalido");
+    } else {
+        alertaCodigo.style.display = "none";
+        campoCodigo.classList.remove("input-invalido");
+    }
+
+    if (reiniciado === "nao") {
+        alertaReinicio.style.display = "block";
+        botao.disabled = true;
+        return;
+    } else {
+        alertaReinicio.style.display = "none";
+    }
+
+    if (reiniciado === "sim" && codigo !== "") {
+        botao.disabled = false;
+    } else {
+        botao.disabled = true;
+    }
+}
+
+function enviarEmail() {
+
+    let codigo = document.getElementById("codigoBloqueio").value.trim();
+
+    let respostaReinicio = reiniciado === "sim"
+        ? "[ X ] Sim\n[   ] Não"
+        : "[   ] Sim\n[ X ] Não";
+
+    const destinatario = "suportehw-spi@senior.com.br";
+    const assunto = "Solicitação Chave Desbloqueio De Registrador";
+
+    const corpo = `CNPJ: 93.209.765/0663-04
+N° Fabricação: 00013004630002670
+Código de Bloqueio: ${codigo}
+Lacre: 0044524
+
+O relógio foi reiniciado novamente antes da solicitação?
+
+${respostaReinicio}
+
+Obs.: CPD !!! O Relógio Deve Ser Reiniciado Antes Da Solicitação Da Chave Para Desbloqueio.`;
+
+    const gmailLink = "https://mail.google.com/mail/?view=cm&fs=1"
+        + "&to=" + encodeURIComponent(destinatario)
+        + "&su=" + encodeURIComponent(assunto)
+        + "&body=" + encodeURIComponent(corpo);
+
+    window.open(gmailLink, "_blank");
+}
+
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>SOLICITAÇÃO DE CHAVE DE DESBLOQUEIO</h2>
+
+<div class="linha">
+<label>CNPJ:</label><br>
+93.209.765/0663-04
+</div>
+
+<div class="linha">
+<label>N° Fabricação:</label><br>
+00013004630002670
+</div>
+
+<div class="linha">
+<label>Código de Bloqueio:</label>
+<input type="text" id="codigoBloqueio"
+       placeholder="Digite letras e números aqui"
+       oninput="validarFormulario()">
+
+<div id="mensagemCodigo" class="alerta">
+    🔴 Preenchimento obrigatório
+</div>
+</div>
+
+<div class="linha">
+<label>Lacre:</label><br>
+0044524
+</div>
+
+<div class="linha">
+<label>O relógio foi reiniciado novamente antes da solicitação?</label>
+
+<div class="opcao" onclick="selecionar('sim')">
+    <div id="sim" class="caixa"></div> Sim
+</div>
+
+<div class="opcao" onclick="selecionar('nao')">
+    <div id="nao" class="caixa"></div> Não
+</div>
+
+<div id="mensagemAlerta" class="alerta">
+    ⚠ Atenção reinicie o relógio antes da solicitação !!!
+</div>
+
+</div>
+
+<button id="btnEnviar" onclick="enviarEmail()" disabled>
+    Enviar Solicitação
+</button>
+
+</div>
+
+</body>
+</html>

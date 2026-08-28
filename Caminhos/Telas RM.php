@@ -1,0 +1,35 @@
+﻿<HTML>
+
+<head></head>
+
+<title>..:: Telas RM ::..</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="\cpd\IMG\cpd2.png"">
+
+<style="width: 78px; height: 35px;" alt="" src="\cpd\IMG\cpd2.png" align="middle"></legend></style>
+
+<body background="\cpd\IMG\capa.jpg" text="ACFCFB" width=100%>
+
+</tr>
+
+<tr >
+
+<td></td>
+<td align="center" width="15%">
+<fieldset><legend><img style="width: 78px; height: 35px;" alt="" src="\cpd\IMG\cpd2.png" align="middle">&nbsp;Filial 663 - Campinas&nbsp;</legend>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+
+<tbody> 
+
+<table align="center" bgcolor="0F3255" border="4"  cellspacing="1" cellpadding="4">
+<tr><td bgcolor="040D16" align="center"><font color="ACFCFB">Setor</font></td><td bgcolor="040D16" align="center"><font color="ACFCFB">Função</font></td><td bgcolor="040D16" align="center"><font color="ACFCFB">Tarefa</font></td><td bgcolor="040D16" align="center"><font color="ACFCFB">Impressora Padrão</font></td><td bgcolor="040D16" align="center"><font color="ACFCFB">Impressora Emergencial</font></td></tr>
+<tr><td style="text-align: center;">RM</td><td style="text-align: center;">SRMBI30</td><td style="text-align: center;">Indentificação de Papelete - Impressão</td><td style="text-align: center;">15 RM</td><td style="text-align: center;">14 Cx Empressa</td></tr>
+<tr><td style="text-align: center;">RM</td><td style="text-align: center;">SRMOU70</td><td style="text-align: center;">Emissão Recido Descarga</td><td style="text-align: center;">15 RM</td><td style="text-align: center;">14 Cx Empressa</tr>
+<tr><td style="text-align: center;">RM</td><td style="text-align: center;">SRMOI18</td><td style="text-align: center;">Identificação De Palete</td><td style="text-align: center;">15 RM</td><td style="text-align: center;">14 Cx Empressa</tr>
+<tr><td style="text-align: center;">RM</td><td style="text-align: center;">SRMOU74</td><td style="text-align: center;">Monitoramento Das CASs</td><td style="text-align: center;">15 RM</td><td style="text-align: center;">14 Cx Empressa</tr>
+<tr><td style="text-align: center;">RM</td><td style="text-align: center;">SRMOU18</td><td style="text-align: center;">Geração De Nfe De Devolução De Compras</td><td style="text-align: center;">15 RM</td><td style="text-align: center;">14 Cx Empressa</tr>
+</table>
+
+</body>
+
+</HTML>
